@@ -43,6 +43,24 @@ body {
   margin-right: 5px;
 }
 
+label {
+  vertical-align: middle;
+  font-size: 14px;
+  color: #48576a;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+.single-option-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.moc-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

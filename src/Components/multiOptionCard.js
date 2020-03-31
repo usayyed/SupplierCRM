@@ -4,6 +4,7 @@ import {Card} from 'element-react';
 class MultiOptionCard extends Component {
   constructor(props) {
     super(props);
+    console.log(props.children)
   }
   
   

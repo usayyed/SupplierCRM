@@ -16,7 +16,8 @@ class SupplierForm extends Component {
         companyState:'',
         postalCode:'',
         website:'',
-        aboutCompany:''
+        aboutCompany:'',
+        duns:''
 
       },
       rules: {
@@ -37,6 +38,16 @@ class SupplierForm extends Component {
                 var zipCodePattern = /^\d{5}$|^\d{5}-\d{4}$/
                 if (!zipCodePattern.test(value)) {
                   callback(new Error('Zipcode error: Invalid Zip Code. Please Enter in 12345 or 12345-1234.'));
+                } else {
+                  callback();
+                }}
+            }
+          ],
+          duns: [
+            { required: true, message: 'Please Input DUNS', trigger: 'blur'}, { trigger: 'blur', validator: (rule, value, callback) => {
+                var dunsPattern = /^\d{9}$/
+                if (!dunsPattern.test(value)) {
+                  callback(new Error('DUNS# error: Invalid DUNS number. Please Enter 9 digit DUNS number'));
                 } else {
                   callback();
                 }}
@@ -134,7 +145,9 @@ class SupplierForm extends Component {
         <Form.Item label="Website" prop='website'>
           <Input type="" value={this.state.form.website} onChange={this.onChange.bind(this, 'website')}></Input>
         </Form.Item>
-
+        <Form.Item label="DUNS#" prop='duns'>
+          <Input type="" value={this.state.form.duns} onChange={this.onChange.bind(this, 'duns')}></Input>
+        </Form.Item>
         <Form.Item label="Company Description" prop='aboutCompany'>
           <Input type="textarea"  autosize={{ minRows: 4, maxRows: 6}}
       placeholder="About Your Company" value={this.state.form.aboutCompany} onChange={this.onChange.bind(this, 'aboutCompany')}></Input>

@@ -15,7 +15,7 @@ function App() {
     <Router>
     <div className="App">
       <Nav />
-      <Card>
+      <Card style={{ "maxWidth": "60%", "margin": "auto", "margin-top": "20px"  }}>
         <Switch>
       <Route exact path="/" component={Home}/>
       <Route path="/supplier-list" component={TableComponent}/>

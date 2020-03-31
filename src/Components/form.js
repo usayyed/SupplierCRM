@@ -16,8 +16,8 @@ class SupplierForm extends Component {
         companyState:'',
         postalCode:'',
         website:'',
-        aboutCompany:''
-
+        aboutCompany:'',
+        services: [],
       },
       rules: {
         name: [
@@ -25,6 +25,9 @@ class SupplierForm extends Component {
         ],
         address: [
           { required: true, message: 'Please Input address', trigger: 'blur'}
+        ],
+        services: [
+          { required: true, message: 'Please input Service name', trigger: 'blur' }
         ],
         city: [
             { required: true, message: 'Please Input city', trigger: 'blur'}
@@ -103,7 +106,7 @@ class SupplierForm extends Component {
 //   }
   render() {
     return (
-      <Form ref="form" className="en-US" model={this.state.form} labelWidth="120" onSubmit={this.onSubmit.bind(this)} rules={this.state.rules}>
+      <Form ref="form" className="en-US" model={this.state.form} labelWidth="120" onSubmit={this.onSubmit.bind(this)} rules={this.state.rules} labelPosition="top">
   
   <Form.Item label="Company Name" prop='name'>
           <Input value={this.state.form.name} onChange={this.onChange.bind(this, 'name')} ></Input>
@@ -139,13 +142,13 @@ class SupplierForm extends Component {
           <Input type="textarea"  autosize={{ minRows: 4, maxRows: 6}}
       placeholder="About Your Company" value={this.state.form.aboutCompany} onChange={this.onChange.bind(this, 'aboutCompany')}></Input>
         </Form.Item>
-        <Form.Item label="Headquarter Address" prop='address'>
-            <MultiOptionCard>
-                <Form.Item label="Headquarter Address" prop='address'>
+        
+        <MultiOptionCard title="List your Services">
+            <Form.Item label="Service Name" prop='services'>
                 <Input type="textarea" value={this.state.form.address} onChange={this.onChange.bind(this, 'address')}></Input>
-                </Form.Item>
-            </MultiOptionCard>
-        </Form.Item>
+            </Form.Item>
+        </MultiOptionCard>
+        
 
         <Form.Item>
           <Button type="primary" nativeType="submit">Create</Button>

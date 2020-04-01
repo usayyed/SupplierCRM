@@ -43,7 +43,7 @@ class CdwContactsFormItem extends Component {
         })
 
         this.forceUpdate()
-        this.props.onUpdate('cdwContacts', this.state.cdwContacts)
+        this.props.onUpdate('cdwContacts', cdwContactsList)
     }
 
     onChange(index, key, value) {

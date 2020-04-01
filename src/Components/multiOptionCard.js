@@ -8,8 +8,6 @@ class MultiOptionCard extends Component {
     for(let i = 0;  i < props.min; i++) {
       props.onAdd();
     }
-
-    console.log(props)
 }
 
   render() {

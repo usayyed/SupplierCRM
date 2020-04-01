@@ -17,7 +17,7 @@ class MultiOptionCard extends Component {
       <div>
         <div className="moc-header">
           <label>{this.props.title}</label>
-          <Button type="primary" icon="plus" onClick={() => this.props.onAdd()} size="small" disabled={this.props.count >= Number(this.props.max - 1)}></Button>
+          <Button type="primary" icon="plus" onClick={() => this.props.onAdd()} size="small" disabled={this.props.count >= Number(this.props.max)}></Button>
         </div>
         {this.props.children}
       </div>

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import csc from 'country-state-city'
 import { Input, Form, Button, Select } from 'element-react';
 import ServicesFormItem from './FormItems/services'
-
+import ProductFormItem from './FormItems/products'
+import CdwContactsFormItem from './FormItems/cdwContacts'
 
 class SupplierForm extends Component {
 
@@ -23,6 +24,8 @@ class SupplierForm extends Component {
         aboutCompany:'',
         duns:'',
         services: [],
+        cdwContacts: [],
+        products: [],
       },
       rules: {
         name: [
@@ -167,6 +170,8 @@ class SupplierForm extends Component {
         </Form.Item>
 
         <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
+        <ProductFormItem onUpdate={this.onChange}> </ProductFormItem>
+        <CdwContactsFormItem onUpdate={this.onChange}> </CdwContactsFormItem>
 
         <Form.Item>
           <Button type="primary" nativeType="submit">Create</Button>

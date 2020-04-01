@@ -4,7 +4,7 @@ import MultiOptionCard from '../multiOptionCard';
 import SingleOptionCard from '../singleOptionCard';
 
 
-class ServicesFormItem extends Component {
+class ProductsFormItem extends Component {
     constructor(props) {
         super(props);
 
@@ -12,7 +12,7 @@ class ServicesFormItem extends Component {
         this.onDelete = this.onDelete.bind(this)
 
         this.state = {
-            services: [],
+            products: [],
             count: 0,
             min: 0,
             max: 5
@@ -20,7 +20,7 @@ class ServicesFormItem extends Component {
     }
 
     onAdd() {
-        this.state.services.push({
+        this.state.products.push({
             value: ''
         })
         this.setState({
@@ -28,48 +28,48 @@ class ServicesFormItem extends Component {
             count: this.state.count + 1
         })
         this.forceUpdate()
-        this.props.onUpdate('services', this.state.services)
+        this.props.onUpdate('products', this.state.products)
     }
 
     onDelete(index) {
-        const servicesList = this.state.services.filter((s, i) => i !== index)
+        const productsList = this.state.products.filter((s, i) => i !== index)
 
         this.setState({
             ...this.state,
-            services: servicesList,
+            products: productsList,
             count: this.state.count - 1
         })
 
         this.forceUpdate()
-        this.props.onUpdate('services', this.state.services)
+        this.props.onUpdate('products', this.state.products)
     }
 
     onChange(index, key, value) {
-        this.state.services[index][key] = value
+        this.state.products[index][key] = value
         this.forceUpdate()
-        this.props.onUpdate('services', this.state.services)
+        this.props.onUpdate('products', this.state.products)
     }
 
     render() {
         return (
-            <MultiOptionCard title="List your Services" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
+            <MultiOptionCard title="List your Products" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
                 {
-                    this.state.services.map((service, index) => {
+                    this.state.products.map((product, index) => {
                         return (
                             <Card key={index}>
                                 <Form.Item
                                     key={index}
-                                    label={`Service ${index + 1}`}
-                                    prop={`services:${index}`}
+                                    label={`Product ${index + 1}`}
+                                    prop={`products:${index}`}
                                     rules={{
                                         type: 'object',
                                         fields: {
-                                            value: { required: true, message: 'Service can not be empty', trigger: 'blur' }
+                                            value: { required: true, message: 'Product can not be empty', trigger: 'blur' }
                                         }
                                     }}
                                 >
                                     <SingleOptionCard onDelete={this.onDelete} index={index}>
-                                        <Input value={service.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
+                                        <Input value={product.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
                                     </SingleOptionCard>
                                 </Form.Item>
                             </Card>
@@ -82,4 +82,4 @@ class ServicesFormItem extends Component {
 
 }
 
-export default ServicesFormItem; 
+export default ProductsFormItem; 

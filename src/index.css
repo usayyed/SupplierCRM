@@ -59,6 +59,11 @@ label {
 .moc-header {
   display: flex;
   justify-content: space-between;
+  margin-top: 15px;
+}
+
+[class*=" el-icon-"], [class^=el-icon-] {
+  width: 10px;
 }
 
 code {

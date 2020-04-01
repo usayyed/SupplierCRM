@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Input, Form, Button, Select } from 'element-react';
-import MultiOptionCard from './multiOptionCard';
+import { Input, Form, Button, Select, Card } from 'element-react';
+import ServicesFormItem from './FormItems/services'
 
 
 class SupplierForm extends Component {
 
   constructor(props) {
     super(props);
+
+    this.onChange = this.onChange.bind(this);
 
     this.state = {
       form: {
@@ -25,9 +27,6 @@ class SupplierForm extends Component {
         ],
         address: [
           { required: true, message: 'Please Input address', trigger: 'blur' }
-        ],
-        services: [
-          { required: true, message: 'Please input Service name', trigger: 'blur' }
         ],
         city: [
           { required: true, message: 'Please Input city', trigger: 'blur' }
@@ -96,12 +95,13 @@ class SupplierForm extends Component {
           ...state.form,
           [key]: value
         }
-
       };
     });
+
+    this.forceUpdate()
     console.log(this.state.form)
   }
-  
+
   render() {
     return (
       <Form ref="form" className="en-US" model={this.state.form} labelWidth="120" onSubmit={this.onSubmit.bind(this)} rules={this.state.rules} labelPosition="top">
@@ -141,12 +141,7 @@ class SupplierForm extends Component {
             placeholder="About Your Company" value={this.state.form.aboutCompany} onChange={this.onChange.bind(this, 'aboutCompany')}></Input>
         </Form.Item>
 
-        <MultiOptionCard title="List your Services">
-          <Form.Item label="Service Name" prop='services'>
-            <Input type="text" value={this.state.form.address} onChange={this.onChange.bind(this, 'address')}></Input>
-          </Form.Item>
-        </MultiOptionCard>
-
+        <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
 
         <Form.Item>
           <Button type="primary" nativeType="submit">Create</Button>

@@ -90,18 +90,21 @@ class CdwContactsFormItem extends Component {
                   callback();
                 }}
                   }],
-                  phone:{
+
+                  phone:[{
                     required: true,
                       message: "Name can not be empty",
-                      trigger: "blur"
+                      trigger: "blur"} , {trigger: 'blur', validator: (rule, value, callback) => {
+                                            var phonePattern = /^\d{9}$/
+                                            if (!phonePattern.test(value)) {
+                                            callback(new Error('Phone# error: Invalid Phone number. Please Enter 9 digit phone number'));
+                                            } else {
+                                            callback();
+                                            }}}]
                   }
-                }
                     }}
-                  
-                
-                
               >
-                <SingleOptionCard onDelete={this.onDelete} index={index}>
+              <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
                   <label>Name: </label>
                   <Input
                     value={cdwContact.name}

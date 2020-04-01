@@ -68,7 +68,7 @@ class ClientsFormItem extends Component {
                                         }
                                     }}
                                 >
-                                    <SingleOptionCard onDelete={this.onDelete} index={index}>
+                                <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
                                         <Input value={client.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
                                     </SingleOptionCard>
                                 </Form.Item>

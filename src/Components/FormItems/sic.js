@@ -32,7 +32,7 @@ class SicFormItem extends Component {
     }
 
     onDelete(index) {
-        const sicCodesList = this.state.nsicCodes.filter((s, i) => i !== index)
+        const sicCodesList = this.state.sicCodes.filter((s, i) => i !== index)
 
         this.setState({
             ...this.state,
@@ -74,7 +74,8 @@ class SicFormItem extends Component {
                                         }
                                     }}
                                 >
-                                    <SingleOptionCard onDelete={this.onDelete} index={index}>
+                                <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
+
                                         <Input value={sicCodes.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
                                     </SingleOptionCard>
                                 </Form.Item>

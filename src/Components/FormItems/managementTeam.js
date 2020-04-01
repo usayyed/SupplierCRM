@@ -56,7 +56,7 @@ class ManagementTeamFormItem extends Component {
         return (
             <MultiOptionCard title="List your Management Teams Details" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
                 {
-                    this.state.managementTeams.map((managementTeams, index) => {
+                    this.state.managementTeams.map((managementTeam, index) => {
                         return (
                             <Card key={index}>
                                 <Form.Item
@@ -70,13 +70,13 @@ class ManagementTeamFormItem extends Component {
                                         }
                                     }}
                                 >
-                                    <SingleOptionCard onDelete={this.onDelete} index={index}>
+                                <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
                                         <label>Name: </label>
-                                      <Input value={managementTeams.name} onChange={(value) => this.onChange(index, 'name', value)}></Input>
+                                      <Input value={managementTeam.name} onChange={(value) => this.onChange(index, 'name', value)}></Input>
                                       <label>Title: </label>
-                                      <Input value={managementTeams.title} onChange={(value) => this.onChange(index, 'title', value)}></Input>
+                                      <Input value={managementTeam.title} onChange={(value) => this.onChange(index, 'title', value)}></Input>
                                       <label>Location: </label>
-                                      <Input value={managementTeams.location} onChange={(value) => this.onChange(index, 'location', value)}></Input>
+                                      <Input value={managementTeam.location} onChange={(value) => this.onChange(index, 'location', value)}></Input>
                                     
                                     </SingleOptionCard>
                                 </Form.Item>

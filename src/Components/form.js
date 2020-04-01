@@ -9,6 +9,8 @@ import SicFormItem from './FormItems/sic'
 import PartnersFormItem from './FormItems/partners'
 import ClientsFormItem from './FormItems/clients'
 import AwardsFormItem from './FormItems/awards'
+import CertificationsFormItem from './FormItems/certifications'
+
 class SupplierForm extends Component {
 
   constructor(props) {
@@ -180,6 +182,8 @@ class SupplierForm extends Component {
         <SicFormItem onUpdate={this.onChange}> </SicFormItem>
         <ClientsFormItem onUpdate={this.onChange}> </ClientsFormItem>
         <AwardsFormItem onUpdate={this.onChange}> </AwardsFormItem>
+        
+        <CertificationsFormItem onUpdate={this.onChange}> </CertificationsFormItem>
         <Form.Item>
           <Button type="primary" nativeType="submit">Create</Button>
           <Button>Cancel</Button>

@@ -64,11 +64,11 @@ class AwardsFormItem extends Component {
                                     rules={{
                                         type: 'object',
                                         fields: {
-                                            value: { required: true, message: 'awards can be empty', trigger: 'blur' }
+                                            value: { required: true, message: 'awards can not be empty', trigger: 'blur' }
                                         }
                                     }}
                                 >
-                                    <SingleOptionCard onDelete={this.onDelete} index={index}>
+                                <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
                                         <Input value={award.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
                                     </SingleOptionCard>
                                 </Form.Item>

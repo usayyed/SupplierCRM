@@ -18,7 +18,7 @@ class App extends React.Component {
           <Nav />
           <Card style={{ "maxWidth": "60%", "margin": "auto", "marginTop": "20px" }}>
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={SupplierForm} />
               <Route path="/supplier-list" component={TableComponent} />
               <Route path="/supplier/:supplierID" component={Supplier} />
               <Route path="/form" component={SupplierForm} />

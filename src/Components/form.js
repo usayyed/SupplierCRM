@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import {Input, Form, Button, Select} from 'element-react';
-import MultiOptionCard from './multiOptionCard';
 import csc from 'country-state-city'
-// Import Interfaces`
-import { ICountry, IState, ICity } from 'country-state-city'
+import { Input, Form, Button, Select } from 'element-react';
+import ServicesFormItem from './FormItems/services'
+
 
 class SupplierForm extends Component {
-    
-    constructor(props) {
+
+  constructor(props) {
     super(props);
+
+    this.onChange = this.onChange.bind(this);
     console.log(csc.getAllCountries())
     this.state = {
       form: {
@@ -28,10 +29,7 @@ class SupplierForm extends Component {
           { required: true, message: 'Please input Company name', trigger: 'blur' }
         ],
         address: [
-          { required: true, message: 'Please Input address', trigger: 'blur'}
-        ],
-        services: [
-          { required: true, message: 'Please input Service name', trigger: 'blur' }
+          { required: true, message: 'Please Input address', trigger: 'blur' }
         ],
         city: [
             { required: true, message: 'Please Input City', trigger: 'blur' }
@@ -79,56 +77,52 @@ class SupplierForm extends Component {
                   callback(new Error('Website'));
                 }}
             }
-          ],
-          aboutCompany: [
-            { required: true, message: 'Please Input Company Description', trigger: 'blur'}
-          ],
-        
+          
+        ],
+        aboutCompany: [
+          { required: true, message: 'Please Input Company Description', trigger: 'blur' }
+        ],
+
       }
     };
   }
-  
+
   onSubmit(e) {
     e.preventDefault();
 
     this.refs.form.validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-  }
-  
-  onChange(key, value) {
-    
-
-    this.setState((state, props) => {
-        return { ...state, 
-            form: {
-                ...state.form,
-                [key]: value
-            }
-
-        };
+      if (valid) {
+        alert('submit!');
+      } else {
+        console.log('error submit!!');
+        return false;
+      }
     });
+  }
+
+  onChange(key, value) {
+    this.setState((state, props) => {
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          [key]: value
+        }
+      };
+    });
+
+    this.forceUpdate()
     console.log(this.state.form)
   }
-  
-// //   validateNonEmpty(key){
-// //     if (this.state.form[key]==''){
-// //         alert("Empty")
-//     }
-//   }
+
   render() {
     return (
       <Form ref="form" className="en-US" model={this.state.form} labelWidth="120" onSubmit={this.onSubmit.bind(this)} rules={this.state.rules} labelPosition="top">
-  
-  <Form.Item label="Company Name" prop='name'>
+
+        <Form.Item label="Company Name" prop='name'>
           <Input value={this.state.form.name} onChange={this.onChange.bind(this, 'name')} ></Input>
         </Form.Item>
-    
+
         <Form.Item label="Headquarter Address" prop='address'>
           <Input type="textarea" value={this.state.form.address} onChange={this.onChange.bind(this, 'address')}></Input>
         </Form.Item>
@@ -168,16 +162,11 @@ class SupplierForm extends Component {
           <Input type="" value={this.state.form.duns} onChange={this.onChange.bind(this, 'duns')}></Input>
         </Form.Item>
         <Form.Item label="Company Description" prop='aboutCompany'>
-          <Input type="textarea"  autosize={{ minRows: 4, maxRows: 6}}
-      placeholder="About Your Company" value={this.state.form.aboutCompany} onChange={this.onChange.bind(this, 'aboutCompany')}></Input>
+          <Input type="textarea" autosize={{ minRows: 4, maxRows: 6 }}
+            placeholder="About Your Company" value={this.state.form.aboutCompany} onChange={this.onChange.bind(this, 'aboutCompany')}></Input>
         </Form.Item>
-        
-        <MultiOptionCard title="List your Services">
-            <Form.Item label="Service Name" prop='services'>
-                <Input type="textarea" value={this.state.form.address} onChange={this.onChange.bind(this, 'address')}></Input>
-            </Form.Item>
-        </MultiOptionCard>
-        
+
+        <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
 
         <Form.Item>
           <Button type="primary" nativeType="submit">Create</Button>

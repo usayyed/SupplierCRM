@@ -56,9 +56,18 @@ label {
   justify-content: space-between;
 }
 
+.single-option-card-btn {
+  margin-top: -35px;
+}
+
 .moc-header {
   display: flex;
   justify-content: space-between;
+  margin-top: 15px;
+}
+
+[class*=" el-icon-"], [class^=el-icon-] {
+  width: 10px;
 }
 
 code {

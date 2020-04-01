@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import {Input, Form, Button, Select} from 'element-react';
 import MultiOptionCard from './multiOptionCard';
-
+import csc from 'country-state-city'
+// Import Interfaces`
+import { ICountry, IState, ICity } from 'country-state-city'
 
 class SupplierForm extends Component {
     
     constructor(props) {
     super(props);
-  
+    console.log(csc.getAllCountries())
     this.state = {
       form: {
         name: '',
        address: '',
         city:'',
         companyState:'',
+        country:'',
         postalCode:'',
         website:'',
         aboutCompany:'',
@@ -31,7 +34,10 @@ class SupplierForm extends Component {
           { required: true, message: 'Please input Service name', trigger: 'blur' }
         ],
         city: [
-            { required: true, message: 'Please Input city', trigger: 'blur'}
+            { required: true, message: 'Please Input City', trigger: 'blur' }
+          ],
+          country: [
+            { required: true, message: 'Please Input Country', trigger: 'blur'}
           ],
           companyState: [
             { required: true, message: 'Please Input State', trigger: 'blur'}
@@ -127,17 +133,27 @@ class SupplierForm extends Component {
           <Input type="textarea" value={this.state.form.address} onChange={this.onChange.bind(this, 'address')}></Input>
         </Form.Item>
 
-        <Form.Item label="State">
-        <Select value={this.state.form.companyState} placeholder="Please select your state">
-          <Select.Option label="Zone 1" value="shanghai"></Select.Option>
-          <Select.Option label="Zone 2" value="beijing"></Select.Option>
+        <Form.Item label="Country">
+        <Select value={this.state.form.country} placeholder="Please select your Country" onChange={this.onChange.bind(this, 'country')}>
+            {csc.getAllCountries().map((country) => (
+                <Select.Option label={country.name} value={country.id}></Select.Option>
+            ))}
+        </Select>
+      </Form.Item>
+
+      <Form.Item label="State">
+        <Select value={this.state.form.companyState} placeholder="Please select your state" onChange={this.onChange.bind(this, 'companyState')} >
+            {csc.getStatesOfCountry(this.state.form.country).map((companyState) => (
+                <Select.Option label={companyState.name} value={companyState.id}></Select.Option>
+            ))}
         </Select>
       </Form.Item>
 
         <Form.Item label="City">
-        <Select value={this.state.form.city} placeholder="Please select your city">
-          <Select.Option label="Zone 1" value="shanghai"></Select.Option>
-          <Select.Option label="Zone 2" value="beijing"></Select.Option>
+        <Select value={this.state.form.city} placeholder="Please select your city" onChange={this.onChange.bind(this, 'city')} >
+        {csc.getStatesOfCountry(this.state.form.companyState).map((city) => (
+                <Select.Option label={city.name} value={city.id}></Select.Option>
+            ))}
         </Select>
       </Form.Item>
 

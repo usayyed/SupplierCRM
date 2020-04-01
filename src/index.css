@@ -56,6 +56,10 @@ label {
   justify-content: space-between;
 }
 
+.single-option-card-btn {
+  margin-top: -35px;
+}
+
 .moc-header {
   display: flex;
   justify-content: space-between;

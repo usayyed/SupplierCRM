@@ -9,9 +9,9 @@ class SingleOptionCard extends Component {
                     <div style={{ "minWidth": "80%" }}>
                         {this.props.children}
                     </div>
-                    <span>
+                    <div className="single-option-card-btn">
                         <Button type="primary" icon="delete" size="small" onClick={() => this.props.onDelete(this.props.index)} disabled={this.props.disabledDelete}></Button>
-                    </span>
+                    </div>
                 </div>
             </div>
         )

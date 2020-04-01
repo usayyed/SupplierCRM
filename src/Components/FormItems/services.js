@@ -15,7 +15,7 @@ class ServicesFormItem extends Component {
             services: [],
             count: 0,
             min: 0,
-            max: 5
+            max: 5,
         }
     }
 
@@ -68,7 +68,7 @@ class ServicesFormItem extends Component {
                                         }
                                     }}
                                 >
-                                    <SingleOptionCard onDelete={this.onDelete} index={index}>
+                                    <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
                                         <Input value={service.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
                                     </SingleOptionCard>
                                 </Form.Item>

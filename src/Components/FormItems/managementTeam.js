@@ -43,7 +43,7 @@ class ManagementTeamFormItem extends Component {
         })
 
         this.forceUpdate()
-        this.props.onUpdate('managementTeams', this.state.managementTeams)
+        this.props.onUpdate('managementTeams', managementTeamsList)
     }
 
     onChange(index, key, value) {
@@ -71,7 +71,13 @@ class ManagementTeamFormItem extends Component {
                                     }}
                                 >
                                     <SingleOptionCard onDelete={this.onDelete} index={index}>
-                                        <Input value={managementTeams.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
+                                        <label>Name: </label>
+                                      <Input value={managementTeams.name} onChange={(value) => this.onChange(index, 'name', value)}></Input>
+                                      <label>Title: </label>
+                                      <Input value={managementTeams.title} onChange={(value) => this.onChange(index, 'title', value)}></Input>
+                                      <label>Location: </label>
+                                      <Input value={managementTeams.location} onChange={(value) => this.onChange(index, 'location', value)}></Input>
+                                    
                                     </SingleOptionCard>
                                 </Form.Item>
                             </Card>

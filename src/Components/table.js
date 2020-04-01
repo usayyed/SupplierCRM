@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Input, Button } from 'element-react';
+import { Table, Input, Button } from 'element-react';
 import { withRouter } from 'react-router-dom';
 
 class TableComponent extends Component {

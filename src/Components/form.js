@@ -4,7 +4,11 @@ import { Input, Form, Button, Select } from 'element-react';
 import ServicesFormItem from './FormItems/services'
 import ProductFormItem from './FormItems/products'
 import CdwContactsFormItem from './FormItems/cdwContacts'
-
+import NaicsFormItem from './FormItems/naics'
+import SicFormItem from './FormItems/sic'
+import PartnersFormItem from './FormItems/partners'
+import ClientsFormItem from './FormItems/clients'
+import AwardsFormItem from './FormItems/awards'
 class SupplierForm extends Component {
 
   constructor(props) {
@@ -25,7 +29,7 @@ class SupplierForm extends Component {
         duns:'',
         services: [],
         cdwContacts: [],
-        products: [],
+        products: []
       },
       rules: {
         name: [
@@ -172,7 +176,10 @@ class SupplierForm extends Component {
         <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
         <ProductFormItem onUpdate={this.onChange}> </ProductFormItem>
         <CdwContactsFormItem onUpdate={this.onChange}> </CdwContactsFormItem>
-
+        <NaicsFormItem onUpdate={this.onChange}> </NaicsFormItem>
+        <SicFormItem onUpdate={this.onChange}> </SicFormItem>
+        <ClientsFormItem onUpdate={this.onChange}> </ClientsFormItem>
+        <AwardsFormItem onUpdate={this.onChange}> </AwardsFormItem>
         <Form.Item>
           <Button type="primary" nativeType="submit">Create</Button>
           <Button>Cancel</Button>

@@ -41,7 +41,7 @@ class ProductsFormItem extends Component {
         })
 
         this.forceUpdate()
-        this.props.onUpdate('products', this.state.products)
+        this.props.onUpdate('products', productsList)
     }
 
     onChange(index, key, value) {

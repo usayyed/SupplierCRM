@@ -41,7 +41,7 @@ class ServicesFormItem extends Component {
         })
 
         this.forceUpdate()
-        this.props.onUpdate('services', this.state.services)
+        this.props.onUpdate('services', servicesList)
     }
 
     onChange(index, key, value) {

@@ -5,7 +5,6 @@ import SingleOptionCard from '../singleOptionCard';
 
 
 class ServicesFormItem extends Component {
-
     constructor(props) {
         super(props);
 
@@ -14,12 +13,19 @@ class ServicesFormItem extends Component {
 
         this.state = {
             services: [],
+            count: 0,
+            min: 2,
+            max: 5
         }
     }
 
     onAdd() {
         this.state.services.push({
             value: ''
+        })
+        this.setState({
+            ...this.state,
+            count: this.state.count + 1
         })
         this.forceUpdate()
         this.props.onUpdate('services', this.state.services)
@@ -30,7 +36,8 @@ class ServicesFormItem extends Component {
 
         this.setState({
             ...this.state,
-            services: servicesList
+            services: servicesList,
+            count: this.state.count - 1
         })
 
         this.forceUpdate()
@@ -45,7 +52,7 @@ class ServicesFormItem extends Component {
 
     render() {
         return (
-            <MultiOptionCard title="List your Services" onAdd={this.onAdd}>
+            <MultiOptionCard title="List your Services" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
                 {
                     this.state.services.map((service, index) => {
                         return (

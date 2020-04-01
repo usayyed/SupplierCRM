@@ -31,7 +31,14 @@ class SupplierForm extends Component {
         duns:'',
         services: [],
         cdwContacts: [],
-        products: []
+        products: [],
+        awards:[],
+        certifications:[],
+        clients:[],
+        naicsCodes:[],
+        managementTeams:[],
+        partners:[],
+        sicCodes:[]
       },
       rules: {
         name: [

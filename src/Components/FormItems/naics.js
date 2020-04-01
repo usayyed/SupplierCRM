@@ -54,12 +54,12 @@ class NaicsFormItem extends Component {
         return (
             <MultiOptionCard title="List your NAICS Codes" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
                 {
-                    this.state.naicsCodes.map((naicsCodes, index) => {
+                    this.state.naicsCodes.map((naicsCode, index) => {
                         return (
                             <Card key={index}>
                                 <Form.Item
                                     key={index}
-                                    label={`NAICS Codes ${index + 1}`}
+                                    label={`NAICS Code ${index + 1}`}
                                     prop={`naicsCodes:${index}`}
                                     rules={{
                                         type: 'object',
@@ -75,7 +75,7 @@ class NaicsFormItem extends Component {
                                     }}
                                 >
                                 <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
-                                        <Input value={naicsCodes.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
+                                        <Input value={naicsCode.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
                                     </SingleOptionCard>
                                 </Form.Item>
                             </Card>

@@ -54,12 +54,12 @@ class SicFormItem extends Component {
         return (
             <MultiOptionCard title="List your SIC Codes" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
                 {
-                    this.state.sicCodes.map((sicCodes, index) => {
+                    this.state.sicCodes.map((sicCode, index) => {
                         return (
                             <Card key={index}>
                                 <Form.Item
                                     key={index}
-                                    label={`SIC Codes ${index + 1}`}
+                                    label={`SIC Code ${index + 1}`}
                                     prop={`sicCodes:${index}`}
                                     rules={{
                                         type: 'object',
@@ -76,7 +76,7 @@ class SicFormItem extends Component {
                                 >
                                 <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
 
-                                        <Input value={sicCodes.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
+                                        <Input value={sicCode.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
                                     </SingleOptionCard>
                                 </Form.Item>
                             </Card>

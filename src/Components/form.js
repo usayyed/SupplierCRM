@@ -10,6 +10,9 @@ import PartnersFormItem from './FormItems/partners'
 import ClientsFormItem from './FormItems/clients'
 import AwardsFormItem from './FormItems/awards'
 import CertificationsFormItem from './FormItems/certifications'
+import SupConFormItem from './FormItems/supCon'
+import AdmConsFormItem from './FormItems/admCon'
+import SalConsFormItem from './FormItems/salCon'
 
 class SupplierForm extends Component {
 
@@ -38,7 +41,10 @@ class SupplierForm extends Component {
         naicsCodes:[],
         managementTeams:[],
         partners:[],
-        sicCodes:[]
+        sicCodes:[],
+        supCons:[],
+        admCons:[],
+        salCons:[],
       },
       rules: {
         name: [
@@ -184,11 +190,17 @@ class SupplierForm extends Component {
 
         <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
         <ProductFormItem onUpdate={this.onChange}> </ProductFormItem>
+        <SupConFormItem onUpdate={this.onChange}> </SupConFormItem>
+        <AdmConsFormItem onUpdate={this.onChange}> </AdmConsFormItem>
+        <SalConsFormItem onUpdate={this.onChange}> </SalConsFormItem>
         <CdwContactsFormItem onUpdate={this.onChange}> </CdwContactsFormItem>
         <NaicsFormItem onUpdate={this.onChange}> </NaicsFormItem>
         <SicFormItem onUpdate={this.onChange}> </SicFormItem>
         <ClientsFormItem onUpdate={this.onChange}> </ClientsFormItem>
+        <PartnersFormItem onUpdate={this.onChange}> </PartnersFormItem>
         <AwardsFormItem onUpdate={this.onChange}> </AwardsFormItem>
+      
+        
         
         <CertificationsFormItem onUpdate={this.onChange}> </CertificationsFormItem>
         <Form.Item>

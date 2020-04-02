@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import TableComponent from './Components/table';
-import Home from './Components/home';
 import Nav from './Components/nav';
 import SupplierForm from './Components/form';
 import Supplier from './Components/supplier';

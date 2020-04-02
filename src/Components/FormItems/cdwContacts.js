@@ -1,3 +1,4 @@
+/*eslint no-useless-escape: 0*/
 import React, { Component } from "react";
 import { Input, Form, Card } from "element-react";
 import MultiOptionCard from "../multiOptionCard";
@@ -78,33 +79,59 @@ class CdwContactsFormItem extends Component {
                       trigger: "blur"
                     },
 
-                    email: [{
-                      required: true,
-                      message: "Email can not be empty",
-                      trigger: "blur"},{ trigger: "blur",
-                       validator: (rule, value, callback) => {
-                var emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
-                if (!emailPattern.test(value)) {
-                  callback(new Error('Email error: Invalid Email. Please Enter valid Email address'));
-                } else {
-                  callback();
-                }}
-                  }],
+                    email: [
+                      {
+                        required: true,
+                        message: "Email can not be empty",
+                        trigger: "blur"
+                      },
+                      {
+                        trigger: "blur",
+                        validator: (rule, value, callback) => {
+                          var emailPattern = /^(([^<>()\[\].,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+                          if (!emailPattern.test(value)) {
+                            callback(
+                              new Error(
+                                "Email error: Invalid Email. Please Enter valid Email address"
+                              )
+                            );
+                          } else {
+                            callback();
+                          }
+                        }
+                      }
+                    ],
 
-                  phone:[{
-                    required: true,
-                      message: "Name can not be empty",
-                      trigger: "blur"} , {trigger: 'blur', validator: (rule, value, callback) => {
-                                            var phonePattern = /^\d{9}$/
-                                            if (!phonePattern.test(value)) {
-                                            callback(new Error('Phone# error: Invalid Phone number. Please Enter 9 digit phone number'));
-                                            } else {
-                                            callback();
-                                            }}}]
+                    phone: [
+                      {
+                        required: true,
+                        message: "Name can not be empty",
+                        trigger: "blur"
+                      },
+                      {
+                        trigger: "blur",
+                        validator: (rule, value, callback) => {
+                          var phonePattern = /^\d{9}$/;
+                          if (!phonePattern.test(value)) {
+                            callback(
+                              new Error(
+                                "Phone# error: Invalid Phone number. Please Enter 9 digit phone number"
+                              )
+                            );
+                          } else {
+                            callback();
+                          }
+                        }
+                      }
+                    ]
                   }
-                    }}
+                }}
               >
-              <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
+                <SingleOptionCard
+                  onDelete={this.onDelete}
+                  index={index}
+                  disabledDelete={this.state.count <= this.state.min}
+                >
                   <label>Name: </label>
                   <Input
                     value={cdwContact.name}

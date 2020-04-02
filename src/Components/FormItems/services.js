@@ -14,7 +14,7 @@ class ServicesFormItem extends Component {
         this.state = {
             services: [],
             count: 0,
-            min: 1,
+            min: 0,
             max: 5,
         }
     }
@@ -52,7 +52,7 @@ class ServicesFormItem extends Component {
 
     render() {
         return (
-            <MultiOptionCard title="List your Services" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
+            <MultiOptionCard title=" List your Services" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
                 {
                     this.state.services.map((service, index) => {
                         return (

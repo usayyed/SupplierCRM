@@ -21,7 +21,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js src/**/*.jsx",
-    "deploy": "yarn build && aws s3 sync build/ s3://supplier-library-react --acl public-read"
+    "deploy": "yarn build && aws s3 sync build/ s3://supplierlibrary.com --acl public-read"
   },
   "eslintConfig": {
     "extends": [

@@ -36,7 +36,7 @@ class SicFormItem extends Component {
 
         this.setState({
             ...this.state,
-            naicsCodes: sicCodesList,
+            sicCodes: sicCodesList,
             count: this.state.count - 1
         })
 

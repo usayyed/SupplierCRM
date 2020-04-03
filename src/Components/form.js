@@ -134,7 +134,7 @@ class SupplierForm extends Component {
     });
 
     this.forceUpdate()
-    console.log(this.state.form)
+    // console.log(this.state.form)
   }
 
   render() {

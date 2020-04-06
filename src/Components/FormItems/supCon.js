@@ -12,7 +12,7 @@ class SupConFormItem extends Component {
     this.onDelete = this.onDelete.bind(this);
 
     this.state = {
-      supCons: [],
+      supplierContact: [],
       count: 0,
       min: 1,
       max: 1
@@ -20,39 +20,39 @@ class SupConFormItem extends Component {
   }
 
   onAdd() {
-    this.state.supCons.push({
+    this.state.supplierContact.push({
       name: "",
       email: "",
       phone: "",
-      location:""
+      location: ""
     });
     this.setState({
       ...this.state,
       count: this.state.count + 1
     });
     this.forceUpdate();
-    this.props.onUpdate("supCons", this.state.supCons);
+    this.props.onUpdate("supplierContact", this.state.supplierContact);
   }
 
   onDelete(index) {
-    const supConsList = this.state.supCons.filter(
+    const supplierContactList = this.state.supplierContact.filter(
       (s, i) => i !== index
     );
 
     this.setState({
       ...this.state,
-      supCons: supConsList,
+      supplierContact: supplierContactList,
       count: this.state.count - 1
     });
 
     this.forceUpdate();
-    this.props.onUpdate("supCons", supConsList);
+    this.props.onUpdate("supplierContact", supplierContactList);
   }
 
   onChange(index, key, value) {
-    this.state.supCons[index][key] = value;
+    this.state.supplierContact[index][key] = value;
     this.forceUpdate();
-    this.props.onUpdate("supCons", this.state.supCons);
+    this.props.onUpdate("supplierContact", this.state.supplierContact);
   }
 
   render() {
@@ -65,13 +65,12 @@ class SupConFormItem extends Component {
         max={this.state.max}
         count={this.state.count}
       >
-        {this.state.supCons.map((supCon, index) => {
+        {this.state.supplierContact.map((supCon, index) => {
           return (
             <Card key={index}>
               <Form.Item
                 key={index}
-              
-                prop={`supCons:${index}`}
+                prop={`supplierContact:${index}`}
                 rules={{
                   type: "object",
                   fields: {
@@ -80,40 +79,66 @@ class SupConFormItem extends Component {
                       message: "Name can not be empty",
                       trigger: "blur"
                     },
-
-                    email: [{
-                      required: true,
-                      message: "Email can not be empty",
-                      trigger: "blur"},{ trigger: "blur",
-                       validator: (rule, value, callback) => {
-                var emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
-                if (!emailPattern.test(value)) {
-                  callback(new Error('Email error: Invalid Email. Please Enter valid Email address'));
-                } else {
-                  callback();
-                }}
-                  }],
-
-                  phone:[{
-                    required: true,
-                      message: "Phone can not be empty",
-                      trigger: "blur"} , {trigger: 'blur', validator: (rule, value, callback) => {
-                                            var phonePattern = /^\d{9}$/
-                                            if (!phonePattern.test(value)) {
-                                            callback(new Error('Phone# error: Invalid Phone number. Please Enter 9 digit phone number'));
-                                            } else {
-                                            callback();
-                                            }}}],
-
-                 location: {
+                    location: {
                       required: true,
                       message: "Location can not be empty",
                       trigger: "blur"
                     },
+
+                    email: [
+                      {
+                        required: true,
+                        message: "Email can not be empty",
+                        trigger: "blur"
+                      },
+                      {
+                        trigger: "blur",
+                        validator: (rule, value, callback) => {
+                          var emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+                          if (!emailPattern.test(value)) {
+                            callback(
+                              new Error(
+                                "Email error: Invalid Email. Please Enter valid Email address"
+                              )
+                            );
+                          } else {
+                            callback();
+                          }
+                        }
+                      }
+                    ],
+
+                    phone: [
+                      {
+                        required: true,
+                        message: "Phone can not be empty",
+                        trigger: "blur"
+                      },
+                      {
+                        trigger: "blur",
+                        validator: (rule, value, callback) => {
+                          var phonePattern = /^\d{10}$/;
+                          if (!phonePattern.test(value)) {
+                            callback(
+                              new Error(
+                                "Phone# error: Invalid Phone number. Please Enter 9 digit phone number"
+                              )
+                            );
+                          } else {
+                            callback();
+                          }
+                        }
+                      }
+                    ]
                   }
-                    }}
+                }}
               >
-              <SingleOptionCard hidden={true} onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
+                <SingleOptionCard
+                  hidden={true}
+                  onDelete={this.onDelete}
+                  index={index}
+                  disabledDelete={this.state.count <= this.state.min}
+                >
                   <label>Name: </label>
                   <Input
                     value={supCon.name}
@@ -128,6 +153,11 @@ class SupConFormItem extends Component {
                   <Input
                     value={supCon.phone}
                     onChange={value => this.onChange(index, "phone", value)}
+                  ></Input>
+                  <label>Location: </label>
+                  <Input
+                    value={supCon.location}
+                    onChange={value => this.onChange(index, "location", value)}
                   ></Input>
                 </SingleOptionCard>
               </Form.Item>

@@ -21,7 +21,7 @@ class PartnersFormItem extends Component {
 
     onAdd() {
         this.state.partners.push({
-            value: ''
+            name: ''
         })
         this.setState({
             ...this.state,
@@ -60,16 +60,16 @@ class PartnersFormItem extends Component {
                                 <Form.Item
                                     key={index}
                                     label={`Partners ${index + 1}`}
-                                    prop={`partner:${index}`}
+                                    prop={`partners:${index}`}
                                     rules={{
                                         type: 'object',
                                         fields: {
-                                            value: { required: true, message: 'Partners can not be empty', trigger: 'blur' }
+                                            name: { required: true, message: 'Partners can not be empty', trigger: 'blur' }
                                         }
                                     }}
                                 >
                                 <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
-                                        <Input value={partner.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
+                                        <Input value={partner.name} onChange={(value) => this.onChange(index, 'name', value)}></Input>
                                     </SingleOptionCard>
                                 </Form.Item>
                             </Card>

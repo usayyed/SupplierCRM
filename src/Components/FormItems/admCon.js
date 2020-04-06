@@ -12,7 +12,7 @@ class AdmConFormItem extends Component {
     this.onDelete = this.onDelete.bind(this);
 
     this.state = {
-      admCons: [],
+      administrativeContact: [],
       count: 0,
       min: 1,
       max: 1
@@ -20,11 +20,11 @@ class AdmConFormItem extends Component {
   }
 
   onAdd() {
-    this.state.admCons.push({
+    this.state.administrativeContact.push({
       name: "",
       email: "",
       phone: "",
-      location:""
+      location: ""
     });
 
     this.setState({
@@ -32,28 +32,26 @@ class AdmConFormItem extends Component {
       count: this.state.count + 1
     });
     this.forceUpdate();
-    this.props.onUpdate("admCons", this.state.admCons);
+    this.props.onUpdate("administrativeContact", this.state.administrativeContact);
   }
 
   onDelete(index) {
-    const admConsList = this.state.admCons.filter(
-      (s, i) => i !== index
-    );
+    const administrativeContactList = this.state.administrativeContact.filter((s, i) => i !== index);
 
     this.setState({
       ...this.state,
-      admCons: admConsList,
+      administrativeContact: administrativeContactList,
       count: this.state.count - 1
     });
 
     this.forceUpdate();
-    this.props.onUpdate("admCons", admConsList);
+    this.props.onUpdate("administrativeContact", administrativeContactList);
   }
 
   onChange(index, key, value) {
-    this.state.admCons[index][key] = value;
+    this.state.administrativeContact[index][key] = value;
     this.forceUpdate();
-    this.props.onUpdate("admCons", this.state.admCons);
+    this.props.onUpdate("administrativeContact", this.state.administrativeContact);
   }
 
   render() {
@@ -66,13 +64,12 @@ class AdmConFormItem extends Component {
         count={this.state.count}
         hidden={true}
       >
-        {this.state.admCons.map((admCon, index) => {
+        {this.state.administrativeContact.map((admCon, index) => {
           return (
             <Card key={index}>
               <Form.Item
                 key={index}
-               
-                prop={`admCons:${index}`}
+                prop={`administrativeContact:${index}`}
                 rules={{
                   type: "object",
                   fields: {
@@ -82,39 +79,66 @@ class AdmConFormItem extends Component {
                       trigger: "blur"
                     },
 
-                    email: [{
-                      required: true,
-                      message: "Email can not be empty",
-                      trigger: "blur"},{ trigger: "blur",
-                       validator: (rule, value, callback) => {
-                var emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
-                if (!emailPattern.test(value)) {
-                  callback(new Error('Email error: Invalid Email. Please Enter valid Email address'));
-                } else {
-                  callback();
-                }}
-                  }],
-
-                  phone:[{
-                    required: true,
-                      message: "Phone can not be empty",
-                      trigger: "blur"} , {trigger: 'blur', validator: (rule, value, callback) => {
-                                            var phonePattern = /^\d{9}$/
-                                            if (!phonePattern.test(value)) {
-                                            callback(new Error('Phone# error: Invalid Phone number. Please Enter 9 digit phone number'));
-                                            } else {
-                                            callback();
-                                            }}}],
-
-                 location: {
+                    location: {
                       required: true,
                       message: "Location can not be empty",
                       trigger: "blur"
                     },
+
+                    email: [
+                      {
+                        required: true,
+                        message: "Email can not be empty",
+                        trigger: "blur"
+                      },
+                      {
+                        trigger: "blur",
+                        validator: (rule, value, callback) => {
+                          var emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+                          if (!emailPattern.test(value)) {
+                            callback(
+                              new Error(
+                                "Email error: Invalid Email. Please Enter valid Email address"
+                              )
+                            );
+                          } else {
+                            callback();
+                          }
+                        }
+                      }
+                    ],
+
+                    phone: [
+                      {
+                        required: true,
+                        message: "Phone can not be empty",
+                        trigger: "blur"
+                      },
+                      {
+                        trigger: "blur",
+                        validator: (rule, value, callback) => {
+                          var phonePattern = /^\d{10}$/;
+                          if (!phonePattern.test(value)) {
+                            callback(
+                              new Error(
+                                "Phone# error: Invalid Phone number. Please Enter 10 digit phone number"
+                              )
+                            );
+                          } else {
+                            callback();
+                          }
+                        }
+                      }
+                    ]
                   }
-                    }}
+                }}
               >
-              <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min} hidden={true}>
+                <SingleOptionCard
+                  onDelete={this.onDelete}
+                  index={index}
+                  disabledDelete={this.state.count <= this.state.min}
+                  hidden={true}
+                >
                   <label>Name: </label>
                   <Input
                     value={admCon.name}
@@ -129,6 +153,11 @@ class AdmConFormItem extends Component {
                   <Input
                     value={admCon.phone}
                     onChange={value => this.onChange(index, "phone", value)}
+                  ></Input>
+                  <label>Location: </label>
+                  <Input
+                    value={admCon.location}
+                    onChange={value => this.onChange(index, "location", value)}
                   ></Input>
                 </SingleOptionCard>
               </Form.Item>

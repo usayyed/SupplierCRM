@@ -60,7 +60,7 @@ class AwardsFormItem extends Component {
                                 <Form.Item
                                     key={index}
                                     label={`Awards ${index + 1}`}
-                                    prop={`award:${index}`}
+                                    prop={`awards:${index}`}
                                     rules={{
                                         type: 'object',
                                         fields: {

@@ -21,7 +21,7 @@ class ServicesFormItem extends Component {
 
     onAdd() {
         this.state.services.push({
-            value: ''
+            name: ''
         })
         this.setState({
             ...this.state,
@@ -64,12 +64,12 @@ class ServicesFormItem extends Component {
                                     rules={{
                                         type: 'object',
                                         fields: {
-                                            value: { required: true, message: 'Service can not be empty', trigger: 'blur' }
+                                            name: { required: true, message: 'Service can not be empty', trigger: 'blur' }
                                         }
                                     }}
                                 >
                                     <SingleOptionCard onDelete={this.onDelete} index={index} disabledDelete={this.state.count <= this.state.min}>
-                                        <Input value={service.value} onChange={(value) => this.onChange(index, 'value', value)}></Input>
+                                        <Input value={service.name} onChange={(value) => this.onChange(index, 'name', value)}></Input>
                                     </SingleOptionCard>
                                 </Form.Item>
                             </Card>

@@ -23,7 +23,7 @@ class CertificationsFormItem extends Component {
         this.state.certifications.push({
             name: '',
             number:'',
-            expiration:''
+            expiration: new Date()
         })
         this.setState({
             ...this.state,
@@ -66,7 +66,9 @@ class CertificationsFormItem extends Component {
                                     rules={{
                                         type: 'object',
                                         fields: {
-                                            value: { required: true, message: 'Certification can not be empty', trigger: 'blur' }
+                                            name: { required: true, message: 'Certification Name can not be empty', trigger: 'blur' },
+                                            number: { required: true, message: 'Certification Number can not be empty', trigger: 'blur' },
+                                            expiration: { type: 'date', required: true, message: 'Certification Date can not be empty', trigger: 'blur' }
                                         }
                                     }}
                                 >

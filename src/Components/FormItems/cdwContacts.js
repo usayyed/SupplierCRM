@@ -111,11 +111,11 @@ class CdwContactsFormItem extends Component {
                       {
                         trigger: "blur",
                         validator: (rule, value, callback) => {
-                          var phonePattern = /^\d{9}$/;
+                          var phonePattern = /^\d{10}$/;
                           if (!phonePattern.test(value)) {
                             callback(
                               new Error(
-                                "Phone# error: Invalid Phone number. Please Enter 9 digit phone number"
+                                "Phone# error: Invalid Phone number. Please Enter 10 digit phone number"
                               )
                             );
                           } else {

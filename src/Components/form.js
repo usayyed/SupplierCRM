@@ -168,7 +168,6 @@ class SupplierForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.submitData();
     this.refs.form.validate(valid => {
       if (valid) {
         this.submitData();

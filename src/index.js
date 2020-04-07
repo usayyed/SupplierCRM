@@ -4,6 +4,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'element-theme-default';
+import { i18n } from 'element-react'
+import locale from 'element-react/src/locale/lang/en'
+
+i18n.use(locale);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import csc from "country-state-city";
-import { Input, Form, Button, Select } from "element-react";
+import { Input, Form, Button, Loading, Upload } from "element-react";
 import ServicesFormItem from "./FormItems/services";
 import ProductFormItem from "./FormItems/products";
 import CdwContactsFormItem from "./FormItems/cdwContacts";
@@ -13,6 +12,7 @@ import CertificationsFormItem from "./FormItems/certifications";
 import SupConFormItem from "./FormItems/supCon";
 import AdmContactFormItem from "./FormItems/admCon";
 import SalContactFormItem from "./FormItems/salCon";
+import config from "../config";
 
 class SupplierForm extends Component {
   constructor(props) {
@@ -20,8 +20,13 @@ class SupplierForm extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.state = {
+      loading: {
+        text: "",
+        value: false
+      },
       form: {
         name: "",
+        image: "",
         address: "",
         city: "",
         state: "",
@@ -48,6 +53,13 @@ class SupplierForm extends Component {
           {
             required: true,
             message: "Please input Company name",
+            trigger: "blur"
+          }
+        ],
+        image: [
+          {
+            required: true,
+            message: "Please upload Company logo",
             trigger: "blur"
           }
         ],
@@ -134,19 +146,32 @@ class SupplierForm extends Component {
     };
   }
 
+  submitData() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.state.form)
+    };
+    this.changeLoadingState(true, "Submitting form data...");
+    fetch(`${config.apiGateway.BASE_URL}/submitForm`, requestOptions)
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(err => console.log(err))
+      .finally(() => this.changeLoadingState(false, "Submitting form data..."));
+  }
+
+  changeLoadingState(value, text) {
+    this.state.loading.value = value;
+    this.state.loading.text = text;
+    this.forceUpdate();
+  }
+
   onSubmit(e) {
     e.preventDefault();
-
+    this.submitData();
     this.refs.form.validate(valid => {
       if (valid) {
-        const requestOptions = {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(this.state.form)
-        };
-        fetch("http://localhost:8000/api/submitForm", requestOptions)
-          .then(response => response.json())
-          .then(data => console.log(data));
+        this.submitData();
       } else {
         console.log("error submit!!");
         return false;
@@ -165,105 +190,165 @@ class SupplierForm extends Component {
       };
     });
 
+    console.log(this.state.form.image)
     this.forceUpdate();
-    // console.log(this.state.form)
+  }
+
+  processImage(e) {
+    const imageUploadPromise = new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.file);
+      reader.onload = (readerEvent) => {
+        var image = new Image();
+        image.onload = function() {
+          // Resize the image
+          var canvas = document.createElement("canvas"),
+          width = 150,
+          height = 150;
+          canvas.width = width;
+          canvas.height = height;
+          canvas.getContext("2d").drawImage(image, 0, 0, width, height);
+          resolve(canvas.toDataURL("image/jpeg"))
+        };
+        image.src = readerEvent.target.result;
+
+        image.onerror = () => {
+          reject(new Error("Error parsing image"));
+        };
+      };
+      reader.onerror = () => {
+        reader.abort();
+        reject(new Error("Error parsing file"));
+      };
+    });
+
+    imageUploadPromise
+      .then(data => {
+        this.changeLoadingState(true, "Uploading image...");
+        this.onChange("image", data);
+      })
+      .catch(err => console.log(err))
+      .finally(() => this.changeLoadingState(false, "Submitting form data..."));
   }
 
   render() {
     return (
-      <Form
-        ref="form"
-        className="en-US"
-        model={this.state.form}
-        labelWidth="120"
-        onSubmit={this.onSubmit.bind(this)}
-        rules={this.state.rules}
-        labelPosition="top"
+      <Loading
+        loading={this.state.loading.value}
+        text={this.state.loading.text}
       >
-        <Form.Item label="Company Name" prop="name">
-          <Input
-            value={this.state.form.name}
-            onChange={this.onChange.bind(this, "name")}
-          ></Input>
-        </Form.Item>
+        <Form
+          ref="form"
+          className="en-US"
+          model={this.state.form}
+          labelWidth="120"
+          onSubmit={this.onSubmit.bind(this)}
+          rules={this.state.rules}
+          labelPosition="top"
+        >
+          <Form.Item label="Company Name" prop="name">
+            <Input
+              value={this.state.form.name}
+              onChange={this.onChange.bind(this, "name")}
+            ></Input>
+          </Form.Item>
 
-        <Form.Item label="Headquarter Address" prop="address">
-          <Input
-            type="textarea"
-            value={this.state.form.address}
-            onChange={this.onChange.bind(this, "address")}
-          ></Input>
-        </Form.Item>
+          <Form.Item label="Company Logo" prop="image">
+            <Upload
+              className="upload"
+              httpRequest={e => this.processImage(e)}
+              showFileList={false}
+              tip={
+                <div className="el-upload__tip">
+                  jpg/png files with a size less than 500kb
+                </div>
+              }
+            >
+              <Button size="small" type="primary">
+                Click to upload
+              </Button>
+            </Upload>
+          </Form.Item>
 
-        <Form.Item label="State" prop="state">
-        <Input
-            type="text"
-            value={this.state.form.state}
-            onChange={this.onChange.bind(this, "state")}
-          ></Input>
-        </Form.Item>
+          <Form.Item label="Headquarter Address" prop="address">
+            <Input
+              type="textarea"
+              value={this.state.form.address}
+              onChange={this.onChange.bind(this, "address")}
+            ></Input>
+          </Form.Item>
 
-        <Form.Item label="City" prop="city">
-        <Input
-            type="text"
-            value={this.state.form.city}
-            onChange={this.onChange.bind(this, "city")}
-          ></Input>
-        </Form.Item>
+          <Form.Item label="State" prop="state">
+            <Input
+              type="text"
+              value={this.state.form.state}
+              onChange={this.onChange.bind(this, "state")}
+            ></Input>
+          </Form.Item>
 
-        <Form.Item label="Postal Code" prop="postalCode">
-          <Input
-            type=""
-            value={this.state.form.postalCode}
-            onChange={this.onChange.bind(this, "postalCode")}
-          ></Input>
-        </Form.Item>
+          <Form.Item label="City" prop="city">
+            <Input
+              type="text"
+              value={this.state.form.city}
+              onChange={this.onChange.bind(this, "city")}
+            ></Input>
+          </Form.Item>
 
-        <Form.Item label="Website" prop="website">
-          <Input
-            type=""
-            value={this.state.form.website}
-            onChange={this.onChange.bind(this, "website")}
-          ></Input>
-        </Form.Item>
-        <Form.Item label="DUNS#" prop="duns">
-          <Input
-            type=""
-            value={this.state.form.duns}
-            onChange={this.onChange.bind(this, "duns")}
-          ></Input>
-        </Form.Item>
-        <Form.Item label="Company Description" prop="description">
-          <Input
-            type="textarea"
-            autosize={{ minRows: 4, maxRows: 6 }}
-            placeholder="About Your Company"
-            value={this.state.form.description}
-            onChange={this.onChange.bind(this, "description")}
-          ></Input>
-        </Form.Item>
+          <Form.Item label="Postal Code" prop="postalCode">
+            <Input
+              type=""
+              value={this.state.form.postalCode}
+              onChange={this.onChange.bind(this, "postalCode")}
+            ></Input>
+          </Form.Item>
 
-        <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
-        <ProductFormItem onUpdate={this.onChange}> </ProductFormItem>
-        <SupConFormItem onUpdate={this.onChange}> </SupConFormItem>
-        <AdmContactFormItem onUpdate={this.onChange}> </AdmContactFormItem>
-        <SalContactFormItem onUpdate={this.onChange}> </SalContactFormItem>
-        <CdwContactsFormItem onUpdate={this.onChange}> </CdwContactsFormItem>
-        <NaicsFormItem onUpdate={this.onChange}> </NaicsFormItem>
-        <SicFormItem onUpdate={this.onChange}> </SicFormItem>
-        <ClientsFormItem onUpdate={this.onChange}> </ClientsFormItem>
-        <PartnersFormItem onUpdate={this.onChange}> </PartnersFormItem>
-        <AwardsFormItem onUpdate={this.onChange}> </AwardsFormItem>
+          <Form.Item label="Website" prop="website">
+            <Input
+              type=""
+              value={this.state.form.website}
+              onChange={this.onChange.bind(this, "website")}
+            ></Input>
+          </Form.Item>
+          <Form.Item label="DUNS#" prop="duns">
+            <Input
+              type=""
+              value={this.state.form.duns}
+              onChange={this.onChange.bind(this, "duns")}
+            ></Input>
+          </Form.Item>
+          <Form.Item label="Company Description" prop="description">
+            <Input
+              type="textarea"
+              autosize={{ minRows: 4, maxRows: 6 }}
+              placeholder="About Your Company"
+              value={this.state.form.description}
+              onChange={this.onChange.bind(this, "description")}
+            ></Input>
+          </Form.Item>
 
-        <CertificationsFormItem onUpdate={this.onChange}>
-        </CertificationsFormItem>
-        <Form.Item>
-          <Button type="primary" nativeType="submit">
-            Create
-          </Button>
-          <Button>Cancel</Button>
-        </Form.Item>
-      </Form>
+          <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
+          <ProductFormItem onUpdate={this.onChange}> </ProductFormItem>
+          <SupConFormItem onUpdate={this.onChange}> </SupConFormItem>
+          <AdmContactFormItem onUpdate={this.onChange}> </AdmContactFormItem>
+          <SalContactFormItem onUpdate={this.onChange}> </SalContactFormItem>
+          <CdwContactsFormItem onUpdate={this.onChange}> </CdwContactsFormItem>
+          <NaicsFormItem onUpdate={this.onChange}> </NaicsFormItem>
+          <SicFormItem onUpdate={this.onChange}> </SicFormItem>
+          <ClientsFormItem onUpdate={this.onChange}> </ClientsFormItem>
+          <PartnersFormItem onUpdate={this.onChange}> </PartnersFormItem>
+          <AwardsFormItem onUpdate={this.onChange}> </AwardsFormItem>
+
+          <CertificationsFormItem
+            onUpdate={this.onChange}
+          ></CertificationsFormItem>
+          <Form.Item>
+            <Button type="primary" nativeType="submit">
+              Create
+            </Button>
+            <Button>Cancel</Button>
+          </Form.Item>
+        </Form>
+      </Loading>
     );
   }
 }

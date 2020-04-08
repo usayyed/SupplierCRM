@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Form, Button, Loading, Upload } from "element-react";
+import { Input, Form, Button, Loading, Upload, MessageBox } from "element-react";
 import ServicesFormItem from "./FormItems/services";
 import ProductFormItem from "./FormItems/products";
 import CdwContactsFormItem from "./FormItems/cdwContacts";
@@ -146,6 +146,11 @@ class SupplierForm extends Component {
     };
   }
 
+  handleReset(e) {
+    e.preventDefault();
+    this.refs.form.resetFields();
+  }
+
   submitData() {
     const requestOptions = {
       method: "POST",
@@ -154,9 +159,25 @@ class SupplierForm extends Component {
     };
     this.changeLoadingState(true, "Submitting form data...");
     fetch(`${config.apiGateway.BASE_URL}/submitForm`, requestOptions)
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(err => console.log(err))
+      .then(() => {
+        MessageBox.msgbox({
+          title: 'Success',
+          message: 'Your details have been successfully saved. Thank you for your time.',
+          type: 'success',
+          showCancelButton: false,
+          confirmButtonText: 'OK',
+        })
+        this.refs.form.resetFields();
+      })
+      .catch(err => {
+        MessageBox.msgbox({
+          title: 'Failed',
+          message: 'Some error occurred. Please contact the administrator',
+          type: 'error',
+          showCancelButton: false,
+          confirmButtonText: 'OK',
+        })
+      })
       .finally(() => this.changeLoadingState(false, "Submitting form data..."));
   }
 
@@ -189,7 +210,6 @@ class SupplierForm extends Component {
       };
     });
 
-    console.log(this.state.form.image)
     this.forceUpdate();
   }
 
@@ -344,7 +364,7 @@ class SupplierForm extends Component {
             <Button type="primary" nativeType="submit">
               Create
             </Button>
-            <Button>Cancel</Button>
+            <Button onClick={this.handleReset.bind(this)}>Cancel</Button>
           </Form.Item>
         </Form>
       </Loading>

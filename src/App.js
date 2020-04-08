@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import TableComponent from './Components/table';
+import UnderConstruction from './Components/underConstruction';
 import Nav from './Components/nav';
 import SupplierForm from './Components/form';
 import Supplier from './Components/supplier';
@@ -18,9 +18,8 @@ class App extends React.Component {
           <Card style={{ "maxWidth": "60%", "margin": "auto", "marginTop": "20px" }}>
             <Switch>
               <Route exact path="/" component={SupplierForm} />
-              <Route path="/supplier-list" component={TableComponent} />
+              <Route path="/supplier-list" component={UnderConstruction} />
               <Route path="/supplier/:supplierID" component={Supplier} />
-              <Route path="/form" component={SupplierForm} />
             </Switch>
           </Card>
 

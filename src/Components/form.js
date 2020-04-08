@@ -224,6 +224,12 @@ class SupplierForm extends Component {
           var canvas = document.createElement("canvas"),
           width = 150,
           height = 150;
+          
+
+          if (canvas.width < 100 || canvas.height < 100) {
+            reject(new Error("Incorrect image dimensions"))
+          }
+
           canvas.width = width;
           canvas.height = height;
           canvas.getContext("2d").drawImage(image, 0, 0, width, height);
@@ -246,7 +252,15 @@ class SupplierForm extends Component {
         this.changeLoadingState(true, "Uploading image...");
         this.onChange("image", data);
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        MessageBox.msgbox({
+          title: 'Failed',
+          message: "Incorrect image dimensions",
+          type: 'error',
+          showCancelButton: false,
+          confirmButtonText: 'OK',
+        })
+      })
       .finally(() => this.changeLoadingState(false, "Submitting form data..."));
   }
 
@@ -279,7 +293,7 @@ class SupplierForm extends Component {
               showFileList={false}
               tip={
                 <div className="el-upload__tip">
-                  jpg/png files with a size less than 500kb
+                  jpg/png files with a size greater than 100px (width and height)
                 </div>
               }
             >

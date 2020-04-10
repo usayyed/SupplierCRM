@@ -1,6 +1,6 @@
 /*eslint no-useless-escape: 0*/
 import React, { Component } from "react";
-import { Input, Form, Card } from "element-react";
+import { Input, Form, Card, Button } from "element-react";
 import MultiOptionCard from "../multiOptionCard";
 import SingleOptionCard from "../singleOptionCard";
 
@@ -12,46 +12,22 @@ class AdmConFormItem extends Component {
     this.onDelete = this.onDelete.bind(this);
 
     this.state = {
-      administrativeContact: [],
-      count: 0,
+      count: 1,
       min: 1,
       max: 1
     };
   }
 
   onAdd() {
-    this.state.administrativeContact.push({
-      name: "",
-      email: "",
-      phone: "",
-      location: ""
-    });
-
-    this.setState({
-      ...this.state,
-      count: this.state.count + 1
-    });
-    this.forceUpdate();
-    this.props.onUpdate("administrativeContact", this.state.administrativeContact);
   }
 
   onDelete(index) {
-    const administrativeContactList = this.state.administrativeContact.filter((s, i) => i !== index);
-
-    this.setState({
-      ...this.state,
-      administrativeContact: administrativeContactList,
-      count: this.state.count - 1
-    });
-
-    this.forceUpdate();
-    this.props.onUpdate("administrativeContact", administrativeContactList);
   }
 
   onChange(index, key, value) {
-    this.state.administrativeContact[index][key] = value;
-    this.forceUpdate();
-    this.props.onUpdate("administrativeContact", this.state.administrativeContact);
+    const dataCopy = JSON.parse(JSON.stringify(this.props.data));
+    dataCopy[index][key] = value
+    this.props.onUpdate("administrativeContact", dataCopy);
   }
 
   render() {
@@ -64,9 +40,12 @@ class AdmConFormItem extends Component {
         count={this.state.count}
         hidden={true}
       >
-        {this.state.administrativeContact.map((admCon, index) => {
+        {this.props.data.map((admCon, index) => {
           return (
             <Card key={index}>
+              <div>
+                <Button type="primary" onClick={() => this.props.onCopy('supplierContact', 'administrativeContact')}>Copy from above</Button>
+              </div>
               <Form.Item
                 key={index}
                 prop={`administrativeContact:${index}`}
@@ -76,23 +55,17 @@ class AdmConFormItem extends Component {
                     name: {
                       required: true,
                       message: "Name can not be empty",
-                      trigger: "blur"
-                    },
-
-                    location: {
-                      required: true,
-                      message: "Location can not be empty",
-                      trigger: "blur"
+                      trigger: "blur,change"
                     },
 
                     email: [
                       {
                         required: true,
                         message: "Email can not be empty",
-                        trigger: "blur"
+                        trigger: "blur,change"
                       },
                       {
-                        trigger: "blur",
+                        trigger: "blur,change",
                         validator: (rule, value, callback) => {
                           var emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
                           if (!emailPattern.test(value)) {
@@ -112,10 +85,10 @@ class AdmConFormItem extends Component {
                       {
                         required: true,
                         message: "Phone can not be empty",
-                        trigger: "blur"
+                        trigger: "blur,change"
                       },
                       {
-                        trigger: "blur",
+                        trigger: "blur,change",
                         validator: (rule, value, callback) => {
                           var phonePattern = /^\d{10}$/;
                           if (!phonePattern.test(value)) {
@@ -149,15 +122,10 @@ class AdmConFormItem extends Component {
                     value={admCon.email}
                     onChange={value => this.onChange(index, "email", value)}
                   ></Input>
-                  <label>Phone: </label>
+                  <label>Phone: (No dashes or Country code)</label>
                   <Input
                     value={admCon.phone}
                     onChange={value => this.onChange(index, "phone", value)}
-                  ></Input>
-                  <label>Location: </label>
-                  <Input
-                    value={admCon.location}
-                    onChange={value => this.onChange(index, "location", value)}
                   ></Input>
                 </SingleOptionCard>
               </Form.Item>

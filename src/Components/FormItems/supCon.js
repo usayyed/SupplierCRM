@@ -12,47 +12,22 @@ class SupConFormItem extends Component {
     this.onDelete = this.onDelete.bind(this);
 
     this.state = {
-      supplierContact: [],
-      count: 0,
+      count: 1,
       min: 1,
       max: 1
     };
   }
 
   onAdd() {
-    this.state.supplierContact.push({
-      name: "",
-      email: "",
-      phone: "",
-      location: ""
-    });
-    this.setState({
-      ...this.state,
-      count: this.state.count + 1
-    });
-    this.forceUpdate();
-    this.props.onUpdate("supplierContact", this.state.supplierContact);
   }
 
   onDelete(index) {
-    const supplierContactList = this.state.supplierContact.filter(
-      (s, i) => i !== index
-    );
-
-    this.setState({
-      ...this.state,
-      supplierContact: supplierContactList,
-      count: this.state.count - 1
-    });
-
-    this.forceUpdate();
-    this.props.onUpdate("supplierContact", supplierContactList);
   }
 
   onChange(index, key, value) {
-    this.state.supplierContact[index][key] = value;
-    this.forceUpdate();
-    this.props.onUpdate("supplierContact", this.state.supplierContact);
+    const dataCopy = JSON.parse(JSON.stringify(this.props.data));
+    dataCopy[index][key] = value
+    this.props.onUpdate("supplierContact", dataCopy);
   }
 
   render() {
@@ -65,7 +40,7 @@ class SupConFormItem extends Component {
         max={this.state.max}
         count={this.state.count}
       >
-        {this.state.supplierContact.map((supCon, index) => {
+        {this.props.data.map((supCon, index) => {
           return (
             <Card key={index}>
               <Form.Item
@@ -77,22 +52,17 @@ class SupConFormItem extends Component {
                     name: {
                       required: true,
                       message: "Name can not be empty",
-                      trigger: "blur"
-                    },
-                    location: {
-                      required: true,
-                      message: "Location can not be empty",
-                      trigger: "blur"
+                      trigger: "blur,change"
                     },
 
                     email: [
                       {
                         required: true,
                         message: "Email can not be empty",
-                        trigger: "blur"
+                        trigger: "blur,change"
                       },
                       {
-                        trigger: "blur",
+                        trigger: "blur,change",
                         validator: (rule, value, callback) => {
                           var emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
                           if (!emailPattern.test(value)) {
@@ -112,10 +82,10 @@ class SupConFormItem extends Component {
                       {
                         required: true,
                         message: "Phone can not be empty",
-                        trigger: "blur"
+                        trigger: "blur,change"
                       },
                       {
-                        trigger: "blur",
+                        trigger: "blur,change",
                         validator: (rule, value, callback) => {
                           var phonePattern = /^\d{10}$/;
                           if (!phonePattern.test(value)) {
@@ -149,15 +119,10 @@ class SupConFormItem extends Component {
                     value={supCon.email}
                     onChange={value => this.onChange(index, "email", value)}
                   ></Input>
-                  <label>Phone: </label>
+                  <label>Phone: (No dashes or Country code)</label>
                   <Input
                     value={supCon.phone}
                     onChange={value => this.onChange(index, "phone", value)}
-                  ></Input>
-                  <label>Location: </label>
-                  <Input
-                    value={supCon.location}
-                    onChange={value => this.onChange(index, "location", value)}
                   ></Input>
                 </SingleOptionCard>
               </Form.Item>

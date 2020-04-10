@@ -142,7 +142,7 @@ class CdwContactsFormItem extends Component {
                     value={cdwContact.email}
                     onChange={value => this.onChange(index, "email", value)}
                   ></Input>
-                  <label>Phone: </label>
+                  <label>Phone: (No dashes or Country code)</label>
                   <Input
                     value={cdwContact.phone}
                     onChange={value => this.onChange(index, "phone", value)}

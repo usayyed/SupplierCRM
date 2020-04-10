@@ -1,6 +1,6 @@
 /*eslint no-useless-escape: 0*/
 import React, { Component } from "react";
-import { Input, Form, Card } from "element-react";
+import { Input, Form, Card, Button } from "element-react";
 import MultiOptionCard from "../multiOptionCard";
 import SingleOptionCard from "../singleOptionCard";
 
@@ -12,45 +12,22 @@ class SalConFormItem extends Component {
     this.onDelete = this.onDelete.bind(this);
 
     this.state = {
-      salesContact: [],
-      count: 0,
+      count: 1,
       min: 1,
       max: 1
     };
   }
 
   onAdd() {
-    this.state.salesContact.push({
-      name: "",
-      email: "",
-      phone: "",
-      location: ""
-    });
-    this.setState({
-      ...this.state,
-      count: this.state.count + 1
-    });
-    this.forceUpdate();
-    this.props.onUpdate("salesContact", this.state.salesContact);
   }
 
   onDelete(index) {
-    const salesContactList = this.state.salesContact.filter((s, i) => i !== index);
-
-    this.setState({
-      ...this.state,
-      salesContact: salesContactList,
-      count: this.state.count - 1
-    });
-
-    this.forceUpdate();
-    this.props.onUpdate("salesContact", salesContactList);
   }
 
   onChange(index, key, value) {
-    this.state.salesContact[index][key] = value;
-    this.forceUpdate();
-    this.props.onUpdate("salesContact", this.state.salesContact);
+    const dataCopy = JSON.parse(JSON.stringify(this.props.data));
+    dataCopy[index][key] = value
+    this.props.onUpdate("salesContact", dataCopy);
   }
 
   render() {
@@ -63,9 +40,12 @@ class SalConFormItem extends Component {
         max={this.state.max}
         count={this.state.count}
       >
-        {this.state.salesContact.map((salCon, index) => {
+        {this.props.data.map((salCon, index) => {
           return (
             <Card key={index}>
+              <div>
+                <Button type="primary" onClick={() => this.props.onCopy('administrativeContact', 'salesContact')}>Copy from above</Button>
+              </div>
               <Form.Item
                 key={index}
                 prop={`salesContact:${index}`}
@@ -75,22 +55,17 @@ class SalConFormItem extends Component {
                     name: {
                       required: true,
                       message: "Name can not be empty",
-                      trigger: "blur"
-                    },
-                    location: {
-                      required: true,
-                      message: "Location can not be empty",
-                      trigger: "blur"
+                      trigger: "blur,change"
                     },
 
                     email: [
                       {
                         required: true,
                         message: "Email can not be empty",
-                        trigger: "blur"
+                        trigger: "blur,change"
                       },
                       {
-                        trigger: "blur",
+                        trigger: "blur,change",
                         validator: (rule, value, callback) => {
                           var emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
                           if (!emailPattern.test(value)) {
@@ -110,10 +85,10 @@ class SalConFormItem extends Component {
                       {
                         required: true,
                         message: "Phone can not be empty",
-                        trigger: "blur"
+                        trigger: "blur,change"
                       },
                       {
-                        trigger: "blur",
+                        trigger: "blur,change",
                         validator: (rule, value, callback) => {
                           var phonePattern = /^\d{10}$/;
                           if (!phonePattern.test(value)) {
@@ -147,15 +122,10 @@ class SalConFormItem extends Component {
                     value={salCon.email}
                     onChange={value => this.onChange(index, "email", value)}
                   ></Input>
-                  <label>Phone: </label>
+                  <label>Phone: (No dashes or Country code)</label>
                   <Input
                     value={salCon.phone}
                     onChange={value => this.onChange(index, "phone", value)}
-                  ></Input>
-                  <label>Location: </label>
-                  <Input
-                    value={salCon.location}
-                    onChange={value => this.onChange(index, "location", value)}
                   ></Input>
                 </SingleOptionCard>
               </Form.Item>

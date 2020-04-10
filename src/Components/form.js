@@ -9,9 +9,7 @@ import PartnersFormItem from "./FormItems/partners";
 import ClientsFormItem from "./FormItems/clients";
 import AwardsFormItem from "./FormItems/awards";
 import CertificationsFormItem from "./FormItems/certifications";
-import SupConFormItem from "./FormItems/supCon";
-import AdmContactFormItem from "./FormItems/admCon";
-import SalContactFormItem from "./FormItems/salCon";
+import ContactsFormItem from "./FormItems/contacts";
 import config from "../config";
 
 class SupplierForm extends Component {
@@ -144,6 +142,7 @@ class SupplierForm extends Component {
         ]
       }
     };
+
   }
 
   handleReset(e) {
@@ -193,7 +192,13 @@ class SupplierForm extends Component {
       if (valid) {
         this.submitData();
       } else {
-        console.log("error submit!!");
+        MessageBox.msgbox({
+          title: 'Failed',
+          message: 'Form incomplete. Please fill in all the required details.',
+          type: 'error',
+          showCancelButton: false,
+          confirmButtonText: 'OK',
+        })
         return false;
       }
     });
@@ -361,9 +366,7 @@ class SupplierForm extends Component {
 
           <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
           <ProductFormItem onUpdate={this.onChange}> </ProductFormItem>
-          <SupConFormItem onUpdate={this.onChange}> </SupConFormItem>
-          <AdmContactFormItem onUpdate={this.onChange}> </AdmContactFormItem>
-          <SalContactFormItem onUpdate={this.onChange}> </SalContactFormItem>
+          <ContactsFormItem onUpdate={this.onChange}> </ContactsFormItem>
           <CdwContactsFormItem onUpdate={this.onChange}> </CdwContactsFormItem>
           <NaicsFormItem onUpdate={this.onChange}> </NaicsFormItem>
           <SicFormItem onUpdate={this.onChange}> </SicFormItem>

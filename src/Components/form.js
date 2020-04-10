@@ -377,6 +377,7 @@ class SupplierForm extends Component {
           <CertificationsFormItem
             onUpdate={this.onChange}
           ></CertificationsFormItem>
+          <br/>
           <Form.Item>
             <Button type="primary" nativeType="submit">
               Create

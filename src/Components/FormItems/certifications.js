@@ -78,7 +78,7 @@ class CertificationsFormItem extends Component {
                                       <label>Number: </label>
                                       <Input value={certification.number} onChange={(value) => this.onChange(index, 'number', value)}></Input>
                                       <label>Expiration Date: </label>
-        
+                                      <br/>
                                       <DatePicker
                                             value={certification.expiration}
                                             placeholder="Pick a day"

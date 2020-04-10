@@ -14,7 +14,7 @@ class Nav extends Component {
     return (
       <Menu theme="dark" className="el-menu-demo" mode="horizontal" onSelect={this.onSelect.bind(this)}>
         <Menu.Item index="1">Home</Menu.Item>
-        <Menu.Item index="2"> Catalog List</Menu.Item>
+        <Menu.Item index="2"> Admin Panel</Menu.Item>
       </Menu>
     );
   }

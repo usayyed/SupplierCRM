@@ -91,7 +91,7 @@ class SupConFormItem extends Component {
                           if (!phonePattern.test(value)) {
                             callback(
                               new Error(
-                                "Phone# error: Invalid Phone number. Please Enter 9 digit phone number"
+                                "Phone# error: Invalid Phone number. Please Enter 10 digit phone number"
                               )
                             );
                           } else {

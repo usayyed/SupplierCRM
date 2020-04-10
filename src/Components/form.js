@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Form, Button, Loading, Upload, MessageBox } from "element-react";
+import { Input, Form, Button, Loading, Upload, Icon, MessageBox } from "element-react";
 import ServicesFormItem from "./FormItems/services";
 import ProductFormItem from "./FormItems/products";
 import CdwContactsFormItem from "./FormItems/cdwContacts";
@@ -58,7 +58,7 @@ class SupplierForm extends Component {
           {
             required: true,
             message: "Please upload Company logo",
-            trigger: "blur"
+            trigger: "blur,changes" 
           }
         ],
         address: [
@@ -305,7 +305,9 @@ class SupplierForm extends Component {
               <Button size="small" type="primary">
                 Click to upload
               </Button>
+              {this.state.form.image.length > 0 ? (<Icon name='circle-check' type='primary'/>) : null}
             </Upload>
+            
           </Form.Item>
 
           <Form.Item label="Headquarter Address" prop="address">

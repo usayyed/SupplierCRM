@@ -36,6 +36,11 @@ body {
   text-align: center;
 }
 
+.form-link {
+  float: right;
+  margin-top: -15px;
+}
+
 .el-card {
   margin-top: 10px;
   margin-bottom: 10px;

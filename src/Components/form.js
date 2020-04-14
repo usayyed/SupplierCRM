@@ -302,7 +302,7 @@ class SupplierForm extends Component {
                 </div>
               }
             >
-              <Button size="small" type="primary">
+              <Button size="mini" type="primary">
                 Click to upload
               </Button>
               {this.state.form.image.length > 0 ? (<Icon name='circle-check' type='primary'/>) : null}

@@ -10,7 +10,7 @@ class SingleOptionCard extends Component {
           {!!!this.props.hidden ? (
             <div className="single-option-card-btn">
               <Button
-                type="primary"
+                type="danger"
                 icon="delete"
                 size="small"
                 onClick={() => this.props.onDelete(this.props.index)}

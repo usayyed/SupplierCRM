@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Form, Card } from 'element-react';
+import { Input, Form, Card, Button } from 'element-react';
 import MultiOptionCard from '../multiOptionCard';
 import SingleOptionCard from '../singleOptionCard';
 
@@ -52,6 +52,7 @@ class SicFormItem extends Component {
 
     render() {
         return (
+            <div>
             <MultiOptionCard title="List your SIC Codes" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
                 {
                     this.state.sicCodes.map((sicCode, index) => {
@@ -65,9 +66,9 @@ class SicFormItem extends Component {
                                         type: 'object',
                                         fields: {
                                             value: [{ required: true, message: 'SIC Code can not be empty', trigger: 'blur'} ,{ trigger: 'blur', validator: (rule, value, callback) => {
-                                            var sicPattern = /^\d{12}$/
+                                            var sicPattern = /^\d{4}$/
                                             if (!sicPattern.test(value)) {
-                                            callback(new Error('SIC# error: Invalid SIC number. Please Enter 12 digit SIC number'));
+                                            callback(new Error('SIC# error: Invalid SIC number. Please Enter 4 digit SIC number'));
                                             } else {
                                             callback();
                                             }}}]
@@ -84,6 +85,17 @@ class SicFormItem extends Component {
                     })
                 }
             </MultiOptionCard>
+            <div className="add-btn">
+          <Button
+            type="primary"
+            icon="plus"
+            onClick={() => this.onAdd()}
+            size="small"
+            className=""
+            disabled={this.state.count >= Number(this.state.max)}
+          ></Button>
+        </div>
+      </div>
         )
     }
 

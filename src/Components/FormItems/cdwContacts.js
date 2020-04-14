@@ -1,6 +1,6 @@
 /*eslint no-useless-escape: 0*/
 import React, { Component } from "react";
-import { Input, Form, Card } from "element-react";
+import { Input, Form, Card, Button } from "element-react";
 import MultiOptionCard from "../multiOptionCard";
 import SingleOptionCard from "../singleOptionCard";
 
@@ -56,6 +56,7 @@ class CdwContactsFormItem extends Component {
 
   render() {
     return (
+      <div>
       <MultiOptionCard
         title="List your Primary Contacts at CDW"
         onAdd={this.onAdd}
@@ -153,6 +154,17 @@ class CdwContactsFormItem extends Component {
           );
         })}
       </MultiOptionCard>
+      <div className="add-btn">
+          <Button
+            type="primary"
+            icon="plus"
+            onClick={() => this.onAdd()}
+            size="small"
+            className=""
+            disabled={this.state.count >= Number(this.state.max)}
+          ></Button>
+        </div>
+      </div>
     );
   }
 }

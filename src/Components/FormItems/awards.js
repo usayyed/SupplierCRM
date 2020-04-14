@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Form, Card } from 'element-react';
+import { Input, Form, Card, Button } from 'element-react';
 import MultiOptionCard from '../multiOptionCard';
 import SingleOptionCard from '../singleOptionCard';
 
@@ -52,6 +52,7 @@ class AwardsFormItem extends Component {
 
     render() {
         return (
+            <div>
             <MultiOptionCard title="List your Awards" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
                 {
                     this.state.awards.map((award, index) => {
@@ -77,6 +78,17 @@ class AwardsFormItem extends Component {
                     })
                 }
             </MultiOptionCard>
+            <div className="add-btn">
+          <Button
+            type="primary"
+            icon="plus"
+            onClick={() => this.onAdd()}
+            size="small"
+            className=""
+            disabled={this.state.count >= Number(this.state.max)}
+          ></Button>
+        </div>
+      </div>
         )
     }
 

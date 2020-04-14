@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Form, Card, DatePicker} from 'element-react';
+import { Input, Form, Card, DatePicker, Button } from 'element-react';
 import MultiOptionCard from '../multiOptionCard';
 import SingleOptionCard from '../singleOptionCard';
 
@@ -54,6 +54,7 @@ class CertificationsFormItem extends Component {
 
     render() {
         return (
+            <div>
             <MultiOptionCard title="List your Diverse Certifications" onAdd={this.onAdd} min={this.state.min} max={this.state.max} count={this.state.count}>
                 {
                     this.state.certifications.map((certification, index) => {
@@ -93,6 +94,17 @@ class CertificationsFormItem extends Component {
                     })
                 }
             </MultiOptionCard>
+            <div className="add-btn">
+          <Button
+            type="primary"
+            icon="plus"
+            onClick={() => this.onAdd()}
+            size="small"
+            className=""
+            disabled={this.state.count >= Number(this.state.max)}
+          ></Button>
+        </div>
+      </div>
         )
     }
 

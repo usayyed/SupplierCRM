@@ -15,17 +15,6 @@ class MultiOptionCard extends Component {
       <div>
         <div className="moc-header">
           <label>{this.props.title}</label>
-          {!!!this.props.hidden ? (
-            <div className="moc-header-btn">
-              <Button
-                type="primary"
-                icon="plus"
-                onClick={() => this.props.onAdd()}
-                size="small"
-                disabled={this.props.count >= Number(this.props.max)}
-              ></Button>
-            </div>
-          ) : null}
         </div>
         {this.props.children}
       </div>

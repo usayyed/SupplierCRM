@@ -43,6 +43,15 @@ body {
   margin-right: 5px;
 }
 
+.el-button--small  {
+  width: 100%;
+}
+
+.add-btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 label {
   vertical-align: middle;
   font-size: 14px;

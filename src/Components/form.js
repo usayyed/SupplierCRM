@@ -158,7 +158,11 @@ class SupplierForm extends Component {
     };
     this.changeLoadingState(true, "Submitting form data...");
     fetch(`${config.apiGateway.BASE_URL}/submitForm`, requestOptions)
-      .then(() => {
+      .then((res) => {
+        if (!res.ok || (res.status != 200 && res.status != 201)) {
+          throw new Error("Some error occurred. Please contact the administrator")
+        }
+
         MessageBox.msgbox({
           title: 'Success',
           message: 'Your details have been successfully saved. Thank you for your time.',
@@ -171,7 +175,7 @@ class SupplierForm extends Component {
       .catch(err => {
         MessageBox.msgbox({
           title: 'Failed',
-          message: 'Some error occurred. Please contact the administrator',
+          message: err.message,
           type: 'error',
           showCancelButton: false,
           confirmButtonText: 'OK',

@@ -10,6 +10,7 @@ import ClientsFormItem from "./FormItems/clients";
 import AwardsFormItem from "./FormItems/awards";
 import CertificationsFormItem from "./FormItems/certifications";
 import ContactsFormItem from "./FormItems/contacts";
+import ManagementTeamFormItem from "./FormItems/managementTeam";
 import config from "../config";
 
 class SupplierForm extends Component {
@@ -372,6 +373,7 @@ class SupplierForm extends Component {
 
           <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
           <ProductFormItem onUpdate={this.onChange}> </ProductFormItem>
+          <ManagementTeamFormItem onUpdate={this.onChange}></ManagementTeamFormItem>
           <ContactsFormItem onUpdate={this.onChange}> </ContactsFormItem>
           <CdwContactsFormItem onUpdate={this.onChange}> </CdwContactsFormItem>
           <NaicsFormItem onUpdate={this.onChange}> </NaicsFormItem>

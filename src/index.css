@@ -7,6 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.App {
+  background-color: whitesmoke;
+}
+
 .search {
   display: flex;
   justify-content: flex-start;

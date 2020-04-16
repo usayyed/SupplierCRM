@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Input, Form, Button, Loading, Upload, Icon, MessageBox } from "element-react";
+import {
+  Input,
+  Form,
+  Button,
+  Loading,
+  Upload,
+  Icon,
+  MessageBox,
+  Card,
+} from "element-react";
 import ServicesFormItem from "./FormItems/services";
 import ProductFormItem from "./FormItems/products";
 import CdwContactsFormItem from "./FormItems/cdwContacts";
@@ -21,7 +30,7 @@ class SupplierForm extends Component {
     this.state = {
       loading: {
         text: "",
-        value: false
+        value: false,
       },
       form: {
         name: "",
@@ -45,37 +54,37 @@ class SupplierForm extends Component {
         sicCodes: [],
         supplierContact: [],
         administrativeContact: [],
-        salesContact: []
+        salesContact: [],
       },
       rules: {
         name: [
           {
             required: true,
             message: "Please input Company name",
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         image: [
           {
             required: true,
             message: "Please upload Company logo",
-            trigger: "blur,changes" 
-          }
+            trigger: "blur,changes",
+          },
         ],
         address: [
-          { required: true, message: "Please Input address", trigger: "blur" }
+          { required: true, message: "Please Input address", trigger: "blur" },
         ],
         city: [
-          { required: true, message: "Please Input City", trigger: "blur" }
+          { required: true, message: "Please Input City", trigger: "blur" },
         ],
         state: [
-          { required: true, message: "Please Input State", trigger: "blur" }
+          { required: true, message: "Please Input State", trigger: "blur" },
         ],
         postalCode: [
           {
             required: true,
             message: "Please Input Postal Code",
-            trigger: "blur"
+            trigger: "blur",
           },
           {
             trigger: "blur",
@@ -90,8 +99,8 @@ class SupplierForm extends Component {
               } else {
                 callback();
               }
-            }
-          }
+            },
+          },
         ],
         duns: [
           { required: true, message: "Please Input DUNS", trigger: "blur" },
@@ -108,8 +117,8 @@ class SupplierForm extends Component {
               } else {
                 callback();
               }
-            }
-          }
+            },
+          },
         ],
         website: [
           { required: true, message: "Please Input Website", trigger: "blur" },
@@ -131,19 +140,18 @@ class SupplierForm extends Component {
               } else {
                 callback(new Error("Website"));
               }
-            }
-          }
+            },
+          },
         ],
         description: [
           {
             required: true,
             message: "Please Input Company Description",
-            trigger: "blur"
-          }
-        ]
-      }
+            trigger: "blur",
+          },
+        ],
+      },
     };
-
   }
 
   handleReset(e) {
@@ -155,32 +163,35 @@ class SupplierForm extends Component {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.state.form)
+      body: JSON.stringify(this.state.form),
     };
     this.changeLoadingState(true, "Submitting form data...");
     fetch(`${config.apiGateway.BASE_URL}/submitForm`, requestOptions)
       .then((res) => {
         if (!res.ok || (res.status != 200 && res.status != 201)) {
-          throw new Error("Some error occurred. Please contact the administrator")
+          throw new Error(
+            "Some error occurred. Please contact the administrator"
+          );
         }
 
         MessageBox.msgbox({
-          title: 'Success',
-          message: 'Your details have been successfully saved. Thank you for your time.',
-          type: 'success',
+          title: "Success",
+          message:
+            "Your details have been successfully saved. Thank you for your time.",
+          type: "success",
           showCancelButton: false,
-          confirmButtonText: 'OK',
-        })
+          confirmButtonText: "OK",
+        });
         this.refs.form.resetFields();
       })
-      .catch(err => {
+      .catch((err) => {
         MessageBox.msgbox({
-          title: 'Failed',
+          title: "Failed",
           message: err.message,
-          type: 'error',
+          type: "error",
           showCancelButton: false,
-          confirmButtonText: 'OK',
-        })
+          confirmButtonText: "OK",
+        });
       })
       .finally(() => this.changeLoadingState(false, "Submitting form data..."));
   }
@@ -193,17 +204,17 @@ class SupplierForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.refs.form.validate(valid => {
+    this.refs.form.validate((valid) => {
       if (valid) {
         this.submitData();
       } else {
         MessageBox.msgbox({
-          title: 'Failed',
-          message: 'Form incomplete. Please fill in all the required details.',
-          type: 'error',
+          title: "Failed",
+          message: "Form incomplete. Please fill in all the required details.",
+          type: "error",
           showCancelButton: false,
-          confirmButtonText: 'OK',
-        })
+          confirmButtonText: "OK",
+        });
         return false;
       }
     });
@@ -215,8 +226,8 @@ class SupplierForm extends Component {
         ...state,
         form: {
           ...state.form,
-          [key]: value
-        }
+          [key]: value,
+        },
       };
     });
 
@@ -229,21 +240,20 @@ class SupplierForm extends Component {
       reader.readAsDataURL(e.file);
       reader.onload = (readerEvent) => {
         var image = new Image();
-        image.onload = function() {
+        image.onload = function () {
           // Resize the image
           var canvas = document.createElement("canvas"),
-          width = 150,
-          height = 150;
-          
+            width = 150,
+            height = 150;
 
           if (canvas.width < 100 || canvas.height < 100) {
-            reject(new Error("Incorrect image dimensions"))
+            reject(new Error("Incorrect image dimensions"));
           }
 
           canvas.width = width;
           canvas.height = height;
           canvas.getContext("2d").drawImage(image, 0, 0, width, height);
-          resolve(canvas.toDataURL("image/jpeg"))
+          resolve(canvas.toDataURL("image/jpeg"));
         };
         image.src = readerEvent.target.result;
 
@@ -258,18 +268,18 @@ class SupplierForm extends Component {
     });
 
     imageUploadPromise
-      .then(data => {
+      .then((data) => {
         this.changeLoadingState(true, "Uploading image...");
         this.onChange("image", data);
       })
-      .catch(err => {
+      .catch((err) => {
         MessageBox.msgbox({
-          title: 'Failed',
+          title: "Failed",
           message: "Incorrect image dimensions",
-          type: 'error',
+          type: "error",
           showCancelButton: false,
-          confirmButtonText: 'OK',
-        })
+          confirmButtonText: "OK",
+        });
       })
       .finally(() => this.changeLoadingState(false, "Submitting form data..."));
   }
@@ -280,6 +290,15 @@ class SupplierForm extends Component {
         loading={this.state.loading.value}
         text={this.state.loading.text}
       >
+        <h1 className="form-header">Supplier Profile</h1>
+        <div className="form-header-info">
+          We are gathering information to create <b>Supplier Digital Library</b> for
+          ease of access within our organization. 
+          <br/>
+          Thank you for filling out the
+          form with all the required details.
+        </div>
+        <br></br>
         <Form
           ref="form"
           className="en-US"
@@ -299,20 +318,22 @@ class SupplierForm extends Component {
           <Form.Item label="Company Logo" prop="image">
             <Upload
               className="upload"
-              httpRequest={e => this.processImage(e)}
+              httpRequest={(e) => this.processImage(e)}
               showFileList={false}
               tip={
                 <div className="el-upload__tip">
-                  jpg/png files with a size greater than 100px (width and height)
+                  jpg/png files with a size greater than 100px (width and
+                  height)
                 </div>
               }
             >
               <Button size="mini" type="primary">
                 Click to upload
               </Button>
-              {this.state.form.image.length > 0 ? (<Icon name='circle-check' type='primary'/>) : null}
+              {this.state.form.image.length > 0 ? (
+                <Icon name="circle-check" type="primary" />
+              ) : null}
             </Upload>
-            
           </Form.Item>
 
           <Form.Item label="Headquarter Address" prop="address">
@@ -373,7 +394,9 @@ class SupplierForm extends Component {
 
           <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
           <ProductFormItem onUpdate={this.onChange}> </ProductFormItem>
-          <ManagementTeamFormItem onUpdate={this.onChange}></ManagementTeamFormItem>
+          <ManagementTeamFormItem
+            onUpdate={this.onChange}
+          ></ManagementTeamFormItem>
           <ContactsFormItem onUpdate={this.onChange}> </ContactsFormItem>
           <CdwContactsFormItem onUpdate={this.onChange}> </CdwContactsFormItem>
           <NaicsFormItem onUpdate={this.onChange}> </NaicsFormItem>
@@ -385,7 +408,7 @@ class SupplierForm extends Component {
           <CertificationsFormItem
             onUpdate={this.onChange}
           ></CertificationsFormItem>
-          <br/>
+          <br />
           <Form.Item>
             <Button type="primary" nativeType="submit">
               Create

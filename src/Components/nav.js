@@ -12,9 +12,8 @@ class Nav extends Component {
   }
   render() {
     return (
-      <Menu theme="dark" className="el-menu-demo" mode="horizontal" onSelect={this.onSelect.bind(this)}>
-        <Menu.Item index="1">Home</Menu.Item>
-        <Menu.Item index="2"> Admin Panel</Menu.Item>
+      <Menu theme="light" className="el-menu-demo" mode="horizontal" onSelect={this.onSelect.bind(this)}>
+        <Menu.Item index="1"><img className="nav-img" src="/logo.jpg" alt="logo"/></Menu.Item>
       </Menu>
     );
   }

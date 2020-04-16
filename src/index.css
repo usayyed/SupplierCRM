@@ -85,7 +85,34 @@ label {
   margin-left: 10px;
 }
 
+.nav-img {
+  height: 55px;
+}
 
+.el-menu-demo {
+  background-color: #CC0000;
+}
+
+.el-menu-item.is-active {
+  color: #CC0000;
+}
+
+.el-menu--horizontal>.el-menu-item:hover, .el-menu--horizontal>.el-submenu.is-active .el-submenu__title, .el-menu--horizontal>.el-submenu:hover .el-submenu__title {
+  border-bottom: 5px solid #CC0000;
+}
+
+.form-header {
+  text-align: center;
+  color: #CC0000;
+}
+
+.form-header-info {
+  text-align: center;
+}
+
+.el-menu--horizontal .el-menu-item:hover, .el-menu--horizontal .el-submenu__title:hover {
+  background-color: #CC0000;
+}
 
 [class*=" el-icon-"], [class^=el-icon-] {
   width: 10px;

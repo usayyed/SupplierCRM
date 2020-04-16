@@ -90,12 +90,12 @@ class ManagementTeamFormItem extends Component {
                   index={index}
                   disabledDelete={this.state.count <= this.state.min}
                 >
-                  <label>Name: </label>
+                  <label>* Name: </label>
                   <Input
                     value={managementTeam.name}
                     onChange={(value) => this.onChange(index, "name", value)}
                   ></Input>
-                  <label>Title: </label>
+                  <label>* Title: </label>
                   <Input
                     value={managementTeam.title}
                     onChange={(value) => this.onChange(index, "title", value)}

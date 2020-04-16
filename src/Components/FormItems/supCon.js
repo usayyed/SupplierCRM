@@ -109,17 +109,17 @@ class SupConFormItem extends Component {
                   index={index}
                   disabledDelete={this.state.count <= this.state.min}
                 >
-                  <label>Name: </label>
+                  <label>* Name: </label>
                   <Input
                     value={supCon.name}
                     onChange={value => this.onChange(index, "name", value)}
                   ></Input>
-                  <label>Email: </label>
+                  <label>* Email: </label>
                   <Input
                     value={supCon.email}
                     onChange={value => this.onChange(index, "email", value)}
                   ></Input>
-                  <label>Phone: (No dashes or Country code)</label>
+                  <label>* Phone: (No dashes or Country code)</label>
                   <Input
                     value={supCon.phone}
                     onChange={value => this.onChange(index, "phone", value)}

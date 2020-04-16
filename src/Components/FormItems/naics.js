@@ -69,7 +69,7 @@ class NaicsFormItem extends Component {
               <Card key={index}>
                 <Form.Item
                   key={index}
-                  label={`NAICS Code ${index + 1}`}
+                  label={`* NAICS Code ${index + 1}`}
                   prop={`naicsCodes:${index}`}
                   rules={{
                     type: "object",

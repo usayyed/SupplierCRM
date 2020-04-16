@@ -69,7 +69,7 @@ class SicFormItem extends Component {
               <Card key={index}>
                 <Form.Item
                   key={index}
-                  label={`SIC Code ${index + 1}`}
+                  label={`* SIC Code ${index + 1}`}
                   prop={`sicCodes:${index}`}
                   rules={{
                     type: "object",

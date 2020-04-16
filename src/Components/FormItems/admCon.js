@@ -112,17 +112,17 @@ class AdmConFormItem extends Component {
                   disabledDelete={this.state.count <= this.state.min}
                   hidden={true}
                 >
-                  <label>Name: </label>
+                  <label>* Name: </label>
                   <Input
                     value={admCon.name}
                     onChange={value => this.onChange(index, "name", value)}
                   ></Input>
-                  <label>Email: </label>
+                  <label>* Email: </label>
                   <Input
                     value={admCon.email}
                     onChange={value => this.onChange(index, "email", value)}
                   ></Input>
-                  <label>Phone: (No dashes or Country code)</label>
+                  <label>* Phone: (No dashes or Country code)</label>
                   <Input
                     value={admCon.phone}
                     onChange={value => this.onChange(index, "phone", value)}

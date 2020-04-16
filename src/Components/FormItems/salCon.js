@@ -112,17 +112,17 @@ class SalConFormItem extends Component {
                   index={index}
                   disabledDelete={this.state.count <= this.state.min}
                 >
-                  <label>Name: </label>
+                  <label>* Name: </label>
                   <Input
                     value={salCon.name}
                     onChange={value => this.onChange(index, "name", value)}
                   ></Input>
-                  <label>Email: </label>
+                  <label>* Email: </label>
                   <Input
                     value={salCon.email}
                     onChange={value => this.onChange(index, "email", value)}
                   ></Input>
-                  <label>Phone: (No dashes or Country code)</label>
+                  <label>* Phone: (No dashes or Country code)</label>
                   <Input
                     value={salCon.phone}
                     onChange={value => this.onChange(index, "phone", value)}

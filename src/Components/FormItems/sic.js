@@ -104,10 +104,13 @@ class SicFormItem extends Component {
                     index={index}
                     disabledDelete={this.state.count <= this.state.min}
                   >
+                  <div class="tooltip">
+                    <span class="tooltiptext">Enter 4 digit SIC code</span>
                     <Input
                       value={sicCode.value}
                       onChange={(value) => this.onChange(index, "value", value)}
                     ></Input>
+                    </div>
                   </SingleOptionCard>
                 </Form.Item>
               </Card>

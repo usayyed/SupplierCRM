@@ -104,10 +104,13 @@ class NaicsFormItem extends Component {
                     index={index}
                     disabledDelete={this.state.count <= this.state.min}
                   >
+                  <div class="tooltip">
+                    <span class="tooltiptext">Enter 6 digit NAICS code</span>
                     <Input
                       value={naicsCode.value}
                       onChange={(value) => this.onChange(index, "value", value)}
                     ></Input>
+                    </div>
                   </SingleOptionCard>
                 </Form.Item>
               </Card>

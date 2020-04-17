@@ -376,11 +376,14 @@ class SupplierForm extends Component {
             ></Input>
           </Form.Item>
           <Form.Item label="DUNS#" prop="duns">
+            <div class="tooltip">
+            <span class="tooltiptext">Enter 9 digit DUNS number</span>
             <Input
               type=""
               value={this.state.form.duns}
               onChange={this.onChange.bind(this, "duns")}
             ></Input>
+            </div>
           </Form.Item>
           <Form.Item label="Company Description" prop="description">
             <Input

@@ -7,7 +7,6 @@ import {
   Upload,
   Icon,
   MessageBox,
-  Card,
 } from "element-react";
 import ServicesFormItem from "./FormItems/services";
 import ProductFormItem from "./FormItems/products";
@@ -292,11 +291,10 @@ class SupplierForm extends Component {
       >
         <h1 className="form-header">Supplier Profile</h1>
         <div className="form-header-info">
-          We are gathering information to create <b>Supplier Digital Library</b> for
-          ease of access within our organization. 
-          <br/>
-          Thank you for filling out the
-          form with all the required details.
+          We are gathering information to create <b>Supplier Digital Library</b>{" "}
+          for ease of access within our organization.
+          <br />
+          Thank you for filling out the form with all the required details.
         </div>
         <br></br>
         <Form
@@ -377,12 +375,12 @@ class SupplierForm extends Component {
           </Form.Item>
           <Form.Item label="DUNS#" prop="duns">
             <div class="tooltip">
-            <span class="tooltiptext">Enter 9 digit DUNS number</span>
-            <Input
-              type=""
-              value={this.state.form.duns}
-              onChange={this.onChange.bind(this, "duns")}
-            ></Input>
+              <span class="tooltiptext">Enter 9 digit DUNS number</span>
+              <Input
+                type=""
+                value={this.state.form.duns}
+                onChange={this.onChange.bind(this, "duns")}
+              ></Input>
             </div>
           </Form.Item>
           <Form.Item label="Company Description" prop="description">

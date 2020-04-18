@@ -1,13 +1,7 @@
 import React, { Component } from "react";
-import {
-  Input,
-  Form,
-  Button,
-  Loading,
-  MessageBox,
-} from "element-react";
+import { Input, Form, Button, Loading, MessageBox } from "element-react";
 import config from "../config";
-import LocalStorageService from '../Middleware/LocalStorageService';
+import LocalStorageService from "../Middleware/LocalStorageService";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -37,7 +31,7 @@ class LoginForm extends Component {
             message: "Please input password",
             trigger: "blur,changes",
           },
-        ]
+        ],
       },
     };
   }
@@ -65,13 +59,13 @@ class LoginForm extends Component {
         }
 
         if (res.status === 401) {
-            throw new Error("Invalid username or password")
+          throw new Error("Invalid username or password");
         }
 
-        return res.json()
+        return res.json();
       })
       .then((data) => {
-          LocalStorageService.getService().setCredentials(data);
+        LocalStorageService.getService().setCredentials(data);
       })
       .catch((err) => {
         MessageBox.msgbox({

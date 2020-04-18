@@ -168,7 +168,7 @@ class SupplierForm extends Component {
     this.changeLoadingState(true, "Submitting form data...");
     fetch(`${config.apiGateway.BASE_URL}/submitForm`, requestOptions)
       .then((res) => {
-        if (!res.ok || (res.status != 200 && res.status != 201)) {
+        if (!res.ok || (res.status !== 200 && res.status !== 201)) {
           throw new Error(
             "Some error occurred. Please contact the administrator"
           );

@@ -4,7 +4,8 @@ import UnderConstruction from './Components/underConstruction';
 import Nav from './Components/nav';
 import SupplierForm from './Components/form';
 import Supplier from './Components/supplier';
-import { Card } from 'element-react'
+import Login from './Components/login';
+import { Card } from 'element-react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -19,6 +20,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={SupplierForm} />
               <Route path="/supplier-list" component={UnderConstruction} />
+              <Route path="/login" component={Login} />
               <Route path="/supplier/:supplierID" component={Supplier} />
             </Switch>
           </Card>

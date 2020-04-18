@@ -9,6 +9,8 @@ body {
 
 .App {
   background-color: whitesmoke;
+  width: auto;
+  height: 2000px;
 }
 
 .search {

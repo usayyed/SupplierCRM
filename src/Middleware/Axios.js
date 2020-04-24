@@ -1,6 +1,5 @@
 import axios from "axios";
 import LocalStorageService from "./LocalStorageService";
-import { history } from "../index";
 
 // LocalstorageService
 const localStorageService = LocalStorageService.getService();
@@ -9,7 +8,7 @@ const localStorageService = LocalStorageService.getService();
 axios.interceptors.request.use(
   (config) => {
     if (!localStorageService.isLoggedIn()) {
-      history.push("/login");
+      window.location.href = '/login';
     }
     return config;
   },

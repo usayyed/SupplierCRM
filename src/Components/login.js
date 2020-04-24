@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Input, Form, Button, Loading, MessageBox } from "element-react";
 import config from "../config";
 import LocalStorageService from "../Middleware/LocalStorageService";
+import { withRouter } from "react-router-dom";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -66,6 +67,7 @@ class LoginForm extends Component {
       })
       .then((data) => {
         LocalStorageService.getService().setCredentials(data);
+        this.props.history.push("/supplier-list");
       })
       .catch((err) => {
         MessageBox.msgbox({
@@ -160,4 +162,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);

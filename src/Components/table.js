@@ -16,6 +16,13 @@ class TableComponent extends Component {
     this.onUpdate("request", "searchTerm", searchTerm);
   }
 
+  onSearch() {
+    this.onUpdate("request", "pageNumber", 1);
+    const body = {...this.state.request};
+    body.pageNumber = 1;
+    this.request(body);
+  }
+
   onUpdate(term, key, value) {
     this.setState((state, props) => {
       return {
@@ -27,7 +34,6 @@ class TableComponent extends Component {
       };
     });
 
-    console.log(this.state);
     this.forceUpdate();
   }
 
@@ -100,7 +106,7 @@ class TableComponent extends Component {
         searchTerm: "",
         orderBy: [],
       },
-      count: 0,
+      count: 100,
     };
   }
 
@@ -121,12 +127,15 @@ class TableComponent extends Component {
               <Button
                 type="primary"
                 icon="search"
-                onClick={this.request.bind(this)}
+                onClick={() => this.onSearch()}
               >
                 {" "}
                 Search
               </Button>
             </div>
+          </div>
+          <div className="table-count">
+          <label>Total Count: &nbsp; {this.state.count}</label>
           </div>
           <div className="search-dropdown">
             <label>Search by &nbsp;</label>
@@ -160,8 +169,8 @@ class TableComponent extends Component {
         <Pagination
           layout="prev, pager, next"
           total={this.state.count}
-          small={true}
           pageSize={this.state.request.pageSize}
+          small={true}
           onCurrentChange={(v) => this.onPageChange(v)}
         />
         </div>
@@ -170,17 +179,19 @@ class TableComponent extends Component {
   }
 
   onPageChange(val) {
+    const body = { ...this.state.request };
+    body.pageNumber = val;
     this.onUpdate("request", "pageNumber", val);
     this.forceUpdate();
-    this.request();
+    this.request(body);
   }
 
-  request() {
+  request(body) {
     this.changeLoadingState(true, "Loading data...");
     axios
       .post(
         `${config.apiGateway.BASE_URL}/admin/getSuppliers`,
-        this.state.request
+        body
       )
       .then((res) => {
         if (res.status !== 201 && res.status !== 200) {
@@ -190,7 +201,7 @@ class TableComponent extends Component {
         }
 
         this.setState((state, props) => {
-          return { ...state, data: res.data.data, count: res.data.count };
+          return { ...state, data: res.data.data, count: Number.parseInt(res.data.count) };
         });
       })
       .catch((err) => {
@@ -199,8 +210,8 @@ class TableComponent extends Component {
       .finally(() => this.changeLoadingState(false, ""));;
   }
 
-  componentDidMount() {
-    this.request();
+  componentWillMount() {
+    this.request(this.state.request);
   }
 }
 

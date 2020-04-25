@@ -76,6 +76,10 @@ body {
   border-color: #CC0000;
 }
 
+.table-count {
+  margin-top: 10px;
+}
+
 .supplier-container {
   display: flex;
   justify-content: flex-start;

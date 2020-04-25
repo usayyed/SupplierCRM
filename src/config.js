@@ -1,6 +1,6 @@
 const dev = {
   apiGateway: {
-    BASE_URL: "http://localhost:8000/api"
+    BASE_URL: "http://ec2-18-144-81-114.us-west-1.compute.amazonaws.com:8000/api"
   }
 };
 

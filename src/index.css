@@ -60,9 +60,14 @@ body {
   justify-content: flex-start;
 }
 
+.supplier-header-name {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
 .supplier-image img {
-  width: 75px;
-  height: 75px;
+  width: 300px;
+  height: 100px;
   border-style: solid;
   border-color: #CC0000;
 }
@@ -102,7 +107,7 @@ body {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   font-size: xx-large;
-  text-align: center;
+  /* text-align: center; */
   border: none;
   
 }
@@ -114,7 +119,6 @@ body {
 
 .supplier-container-right .supplier-header h1 {
   margin-right: 10px;
-  margin-top: 50px;
 }
 
 .supplier-container-right > * {

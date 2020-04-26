@@ -3,7 +3,7 @@ import { Card } from "element-react";
 import axios from "../Middleware/Axios";
 import config from "../config";
 import { withRouter } from "react-router-dom";
-import moment from 'moment';
+import moment from "moment";
 
 class Supplier extends Component {
   constructor(props) {
@@ -19,6 +19,12 @@ class Supplier extends Component {
         clients: [],
         partners: [],
         certifications: [],
+        naicsCodes: [],
+        sicCodes: [],
+        administrativeContact: [],
+        salesContact: [],
+        supplierContact: [],
+        cdwContacts: [],
       },
       name: "DoddiTech",
       description:
@@ -99,7 +105,9 @@ class Supplier extends Component {
           <div className="supplier-image">
             <img src={this.state.data.image} alt="Red dot" />
           </div>
-          <h1> {this.state.data.name} </h1>
+          <div className="supplier-header-name">
+            <h1> {this.state.data.name} </h1>
+          </div>
         </div>
 
         <div className="supplier-container">
@@ -168,7 +176,8 @@ class Supplier extends Component {
             ) : null}
 
             {this.state.data.awards.length > 0 ||
-            this.state.data.clients.length > 0|| this.state.data.partners.length > 0 ? (
+            this.state.data.clients.length > 0 ||
+            this.state.data.partners.length > 0 ? (
               <div className="supplier-row">
                 {this.state.data.awards.length > 0 ? (
                   <div className="supplier-col">
@@ -209,6 +218,140 @@ class Supplier extends Component {
               </div>
             ) : null}
 
+            {this.state.data.administrativeContact.length > 0 ||
+            this.state.data.salesContact.length > 0 ||
+            this.state.data.supplierContact.length > 0 ? (
+              <div className="supplier-row">
+                {this.state.data.administrativeContact.length > 0 ? (
+                  <div className="supplier-col">
+                    <Card className="box-card">
+                      <h2> Administrative Contact: </h2>
+                      {this.state.data.administrativeContact.map((o, i) => {
+                        return (
+                          <div>
+                            <b>Name: </b> {o.name}
+                            <br />
+                            <b>Contact Number: </b>{" "}
+                            <a href={"tel:" + o.phone}>{o.phone}</a>
+                            <br />
+                            <b>Email: </b>
+                            <a href={"mailto:" + o.email.toLowerCase()}>
+                              {o.email.toLowerCase()}
+                            </a>
+                            <br />
+                          </div>
+                        );
+                      })}
+                    </Card>
+                  </div>
+                ) : null}
+                {this.state.data.salesContact.length > 0 ? (
+                  <div className="supplier-col">
+                    <Card className="box-card">
+                      <h2> Sales Contact: </h2>
+                      {this.state.data.salesContact.map((o, i) => {
+                        return (
+                          <div>
+                            <b>Name: </b> {o.name}
+                            <br />
+                            <b>Contact Number: </b>{" "}
+                            <a href={"tel:" + o.phone}>{o.phone}</a>
+                            <br />
+                            <b>Email: </b>
+                            <a href={"mailto:" + o.email.toLowerCase()}>
+                              {o.email.toLowerCase()}
+                            </a>
+                            <br />
+                          </div>
+                        );
+                      })}
+                    </Card>
+                  </div>
+                ) : null}
+                {this.state.data.supplierContact.length > 0 ? (
+                  <div className="supplier-col">
+                    <Card className="box-card">
+                      <h2> Supplier Contact: </h2>
+                      {this.state.data.supplierContact.map((o, i) => {
+                        return (
+                          <div>
+                            <b>Name: </b> {o.name}
+                            <br />
+                            <b>Contact Number: </b>{" "}
+                            <a href={"tel:" + o.phone}>{o.phone}</a>
+                            <br />
+                            <b>Email: </b>
+                            <a href={"mailto:" + o.email.toLowerCase()}>
+                              {o.email.toLowerCase()}
+                            </a>
+                            <br />
+                          </div>
+                        );
+                      })}
+                    </Card>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+
+            {this.state.data.cdwContacts.length > 0 ? (
+              <Card className="box-card">
+                <h2> CDW Contacts: </h2>
+                {this.state.data.cdwContacts.map((o, i) => {
+                  return (
+                    <div className="supplier-row">
+                      <div className="supplier-col">
+                        <b>Name:</b> {o.name}
+                      </div>
+                      <div className="supplier-col">
+                        <b>Contact Number: </b>{" "}
+                        <a href={"tel:" + o.phone}>{o.phone}</a>
+                      </div>
+                      <div className="supplier-col">
+                        <b>Email: </b>
+                        <a href={"mailto:" + o.email.toLowerCase()}>
+                          {o.email.toLowerCase()}
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
+              </Card>
+            ) : null}
+
+            <div className="supplier-row">
+              {this.state.data.naicsCodes.length > 0 ? (
+                <div className="supplier-col">
+                  <Card className="box-card">
+                    <h2> NAICS Codes: </h2>
+                    <ul>
+                      {this.state.data.naicsCodes.map((o, i) => {
+                        return <li key={i}>{o.value}</li>;
+                      })}
+                    </ul>
+                  </Card>
+                </div>
+              ) : null}
+              {this.state.data.sicCodes.length > 0 ? (
+                <div className="supplier-col">
+                  <Card className="box-card">
+                    <h2> SIC Codes: </h2>
+                    <ul>
+                      {this.state.data.sicCodes.map((o, i) => {
+                        return <li key={i}>{o.value}</li>;
+                      })}
+                    </ul>
+                  </Card>
+                </div>
+              ) : null}
+
+              <div className="supplier-col">
+                <Card className="box-card">
+                  <h2> DUNS #: {this.state.data.duns}</h2>
+                </Card>
+              </div>
+            </div>
+
             {this.state.data.certifications.length > 0 ? (
               <Card className="box-card">
                 <h2> Certifications: </h2>
@@ -222,7 +365,8 @@ class Supplier extends Component {
                         <b>Number:</b> {o.number}
                       </div>
                       <div className="supplier-col">
-                        <b>Expiration:</b> {moment(o.expiration).format('MMMM Do YYYY, h:mm:ss a')}
+                        <b>Expiration:</b>{" "}
+                        {moment(o.expiration).format("MMMM Do YYYY")}
                       </div>
                     </div>
                   );
@@ -233,31 +377,31 @@ class Supplier extends Component {
           <div className="supplier-container-right">
             <Card>
               <div className="supplier-header">
-                <h1> {this.state.data.name} </h1>
+                <h1>{this.state.data.name} </h1>
               </div>
             </Card>
           </div>
         </div>
 
         <Card className="box-card">
-          <h2> Contact Details: </h2>
-          <b> Name: </b> {this.state.contact.name}
+          <h2> Company Details: </h2>
+          <b> Name: </b> {this.state.data.name}
           <br />
-          <b>Designation: </b>
-          {this.state.contact.designation}
+          <b> Address: </b>
+          {this.state.data.address}
           <br />
-          <b> Email: </b>
-          <a href={"mailto:" + this.state.contact.email}>
-            {this.state.contact.email}
-          </a>
+          <b> State: </b>
+          {this.state.data.state}
+          <br />
+          <b> City: </b>
+          {this.state.data.city}
+          <br />
+          <b> Zip Code: </b>
+          {this.state.data.postalCode}
           <br />
           <b> Website: </b>{" "}
-          <a href={this.state.contact.website}>{this.state.contact.website}</a>
+          <a href={this.state.data.website}>{this.state.data.website}</a>
           <br />
-          <b>Contact Number: </b>{" "}
-          <a href={"tel:" + this.state.contact.contactno}>
-            {this.state.contact.contactno}
-          </a>
         </Card>
       </div>
     );

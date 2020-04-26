@@ -207,7 +207,7 @@ class TableComponent extends Component {
       .catch((err) => {
         console.log(err.message);
       })
-      .finally(() => this.changeLoadingState(false, ""));;
+      .finally(() => this.changeLoadingState(false, ""));
   }
 
   componentWillMount() {

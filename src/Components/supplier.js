@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card } from "element-react";
+import { Card, Loading, Button } from "element-react";
 import axios from "../Middleware/Axios";
 import config from "../config";
 import { withRouter } from "react-router-dom";
@@ -10,6 +10,10 @@ class Supplier extends Component {
     super(props);
 
     this.state = {
+      loading: {
+        text: "",
+        value: false,
+      },
       data: {
         services: [],
         managementTeams: [],
@@ -76,7 +80,18 @@ class Supplier extends Component {
     };
   }
 
+  changeLoadingState(value, text) {
+    this.state.loading.value = value;
+    this.state.loading.text = text;
+    this.forceUpdate();
+  }
+
+  onClick() {
+    this.props.history.push("/supplier-list");
+  }
+
   componentDidMount() {
+    this.changeLoadingState(true, "Loading supplier details...");
     axios
       .get(
         `${config.apiGateway.BASE_URL}/admin/getSupplier/${this.props.match.params.supplierID}`
@@ -95,18 +110,33 @@ class Supplier extends Component {
       })
       .catch((err) => {
         console.log(err.message);
-      });
+      })
+      .finally(() => this.changeLoadingState(false, ""));
   }
 
   render() {
     return (
-      <div>
+      <Loading
+        loading={this.state.loading.value}
+        text={this.state.loading.text}
+      >
         <div className="supplier-header">
-          <div className="supplier-image">
-            <img src={this.state.data.image} alt="Red dot" />
+          <div className="supplier-header-left">
+            <div className="supplier-image">
+              <img src={this.state.data.image} alt="Red dot" />
+            </div>
+            <div className="supplier-header-name">
+              <h1> {this.state.data.name} </h1>
+            </div>
           </div>
-          <div className="supplier-header-name">
-            <h1> {this.state.data.name} </h1>
+          <div className="supplier-header-right">
+            <Button
+              type="primary"
+              icon="caret-left"
+              onClick={() => this.onClick()}
+            >
+              Go back
+            </Button>
           </div>
         </div>
 
@@ -403,7 +433,7 @@ class Supplier extends Component {
           <a href={this.state.data.website}>{this.state.data.website}</a>
           <br />
         </Card>
-      </div>
+      </Loading>
     );
   }
 }

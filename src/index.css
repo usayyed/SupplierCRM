@@ -55,6 +55,11 @@ body {
 }
 
 .supplier-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.supplier-header-left {
   margin-left: 10px;
   display: flex;
   justify-content: flex-start;

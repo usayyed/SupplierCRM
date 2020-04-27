@@ -64,10 +64,12 @@ class TableComponent extends Component {
         {
           label: "City",
           prop: "city",
+          sortable: true,
         },
         {
           label: "State",
           prop: "state",
+          sortable: true,
         },
         {
           label: "Certifications",
@@ -82,8 +84,8 @@ class TableComponent extends Component {
           prop: "services",
         },
         {
-          label: "Link",
-          width: "75px",
+          label: "Supplier Sheet",
+          width: "100px",
           render: (row, column, index) => {
             return (
               <span>
@@ -117,10 +119,13 @@ class TableComponent extends Component {
         text={this.state.loading.text}
       >
       
+        <div>
+          <h1 className="form-header">Supplier Database</h1>
+        </div>
         <div className="search-bar">
           <div className="search-input">
             <Input
-              placeholder="Search database"
+              placeholder={`Search by ${this.state.request.searchField}`}
               onChange={this.onChange.bind(this)}
             />
             <div className="search-btn">

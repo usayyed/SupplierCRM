@@ -242,8 +242,8 @@ class SupplierForm extends Component {
         image.onload = function () {
           // Resize the image
           var canvas = document.createElement("canvas"),
-            width = 150,
-            height = 150;
+            width = 200,
+            height = 200;
 
           if (canvas.width < 100 || canvas.height < 100) {
             reject(new Error("Incorrect image dimensions"));

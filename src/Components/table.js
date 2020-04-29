@@ -18,7 +18,7 @@ class TableComponent extends Component {
 
   onSearch() {
     this.onUpdate("request", "pageNumber", 1);
-    const body = {...this.state.request};
+    const body = { ...this.state.request };
     body.pageNumber = 1;
     this.request(body);
   }
@@ -74,6 +74,7 @@ class TableComponent extends Component {
         {
           label: "Certifications",
           prop: "certifications",
+          sortable: true,
         },
         {
           label: "Products",
@@ -106,10 +107,21 @@ class TableComponent extends Component {
         pageNumber: 1,
         searchField: "name",
         searchTerm: "",
-        orderBy: [],
+        orderBy: ["name", "ASC"],
       },
       count: 100,
     };
+  }
+
+  onSortChange(opts) {
+    if (opts.prop !== "certifications") {
+      const order = opts.order === "ascending" ? "ASC" : "DESC";
+      this.onUpdate("request", "orderBy", [opts.prop, order]);
+      const body = { ...this.state.request };
+      body.pageNumber = 1;
+      body.orderBy = [opts.prop, order];
+      this.request(body);
+    }
   }
 
   render() {
@@ -118,30 +130,11 @@ class TableComponent extends Component {
         loading={this.state.loading.value}
         text={this.state.loading.text}
       >
-      
         <div>
           <h1 className="form-header">Supplier Database</h1>
         </div>
         <div className="search-bar">
-          <div className="search-input">
-            <Input
-              placeholder={`Search by ${this.state.request.searchField}`}
-              onChange={this.onChange.bind(this)}
-            />
-            <div className="search-btn">
-              <Button
-                type="primary"
-                icon="search"
-                onClick={() => this.onSearch()}
-              >
-                {" "}
-                Search
-              </Button>
-            </div>
-          </div>
-          <div className="table-count">
-          <label>Total Count: &nbsp; {this.state.count}</label>
-          </div>
+          <div className="search-bar-left">
           <div className="search-dropdown">
             <label>Search by &nbsp;</label>
             <Select
@@ -161,23 +154,47 @@ class TableComponent extends Component {
                 })}
             </Select>
           </div>
+          <div className="search-input">
+            <Input
+              placeholder={`Search by ${this.state.request.searchField}`}
+              onChange={this.onChange.bind(this)}
+            />
+            <div className="search-btn">
+              <Button
+                type="primary"
+                icon="search"
+                onClick={() => this.onSearch()}
+              >
+                {" "}
+                Search
+              </Button>
+            </div>
+          </div>
+          </div>
+
+          <div className="table-count">
+            <label>
+              Total Count: &nbsp; <b>{this.state.count}</b>
+            </label>
+          </div>
         </div>
         <br />
         <div className="supplier-table">
-        <Table
-          stripe={true}
-          rowKey={(row) => row.id}
-          columns={this.state.columns}
-          data={this.state.data}
-        />
-        <br/>
-        <Pagination
-          layout="prev, pager, next"
-          total={this.state.count}
-          pageSize={this.state.request.pageSize}
-          small={true}
-          onCurrentChange={(v) => this.onPageChange(v)}
-        />
+          <Table
+            stripe={true}
+            rowKey={(row) => row.id}
+            columns={this.state.columns}
+            data={this.state.data}
+            onSortChange={(opts) => this.onSortChange(opts)}
+          />
+          <br />
+          <Pagination
+            layout="prev, pager, next"
+            total={this.state.count}
+            pageSize={this.state.request.pageSize}
+            small={true}
+            onCurrentChange={(v) => this.onPageChange(v)}
+          />
         </div>
       </Loading>
     );
@@ -194,10 +211,7 @@ class TableComponent extends Component {
   request(body) {
     this.changeLoadingState(true, "Loading data...");
     axios
-      .post(
-        `${config.apiGateway.BASE_URL}/admin/getSuppliers`,
-        body
-      )
+      .post(`${config.apiGateway.BASE_URL}/admin/getSuppliers`, body)
       .then((res) => {
         if (res.status !== 201 && res.status !== 200) {
           throw new Error(
@@ -206,7 +220,11 @@ class TableComponent extends Component {
         }
 
         this.setState((state, props) => {
-          return { ...state, data: res.data.data, count: Number.parseInt(res.data.count) };
+          return {
+            ...state,
+            data: res.data.data,
+            count: Number.parseInt(res.data.count),
+          };
         });
       })
       .catch((err) => {

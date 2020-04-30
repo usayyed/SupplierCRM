@@ -94,7 +94,7 @@ class Supplier extends Component {
     this.changeLoadingState(true, "Loading supplier details...");
     axios
       .get(
-        `${config.apiGateway.BASE_URL}/admin/getSupplier/${this.props.match.params.supplierID}`
+        `/admin/getSupplier/${this.props.match.params.supplierID}`
       )
       .then((res) => {
         if (res.status !== 201 && res.status !== 200) {

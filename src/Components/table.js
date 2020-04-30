@@ -211,7 +211,7 @@ class TableComponent extends Component {
   request(body) {
     this.changeLoadingState(true, "Loading data...");
     axios
-      .post(`${config.apiGateway.BASE_URL}/admin/getSuppliers`, body)
+      .post("/admin/getSuppliers", body)
       .then((res) => {
         if (res.status !== 201 && res.status !== 200) {
           throw new Error(

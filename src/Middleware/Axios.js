@@ -1,5 +1,6 @@
 import axios from "axios";
 import LocalStorageService from "./LocalStorageService";
+import config from "../config";
 
 // LocalstorageService
 const localStorageService = LocalStorageService.getService();
@@ -8,7 +9,7 @@ const localStorageService = LocalStorageService.getService();
 axios.interceptors.request.use(
   (config) => {
     if (!localStorageService.isLoggedIn()) {
-      window.location.href = '/login';
+      window.location.href = "/login";
     }
     return config;
   },
@@ -17,7 +18,12 @@ axios.interceptors.request.use(
   }
 );
 
-export default axios;
+const httpClient = axios.create({
+  baseURL: config.apiGateway.BASE_URL,
+  timeout: 10000,
+});
+
+export default httpClient;
 
 // //Add a response interceptor
 

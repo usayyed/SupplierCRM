@@ -145,6 +145,7 @@ class LoginForm extends Component {
 
           <Form.Item label="Password" prop="password">
             <Input
+              type="password"
               value={this.state.form.password}
               onChange={this.onChange.bind(this, "password")}
             ></Input>

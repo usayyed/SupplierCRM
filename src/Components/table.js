@@ -12,6 +12,23 @@ import axios from "../Middleware/Axios";
 import config from "../config";
 
 class TableComponent extends Component {
+  onResetFilter() {
+    const body = {
+      pageSize: 10,
+      pageNumber: 1,
+      searchField: "name",
+      searchTerm: "",
+      orderBy: ["name", "ASC"],
+    };
+
+    this.setState({
+      ...this.state,
+      request: body,
+    });
+
+    this.request(body);
+  }
+
   onChange(searchTerm) {
     this.onUpdate("request", "searchTerm", searchTerm);
   }
@@ -135,41 +152,47 @@ class TableComponent extends Component {
         </div>
         <div className="search-bar">
           <div className="search-bar-left">
-          <div className="search-dropdown">
-            <label>Search by &nbsp;</label>
-            <Select
-              value={this.state.request.searchField}
-              onChange={(val) => this.onUpdate("request", "searchField", val)}
-            >
-              {this.state.columns
-                .filter((el) => el.label !== "Link")
-                .map((el) => {
-                  return (
-                    <Select.Option
-                      key={el.prop}
-                      label={el.label}
-                      value={el.prop}
-                    />
-                  );
-                })}
-            </Select>
-          </div>
-          <div className="search-input">
-            <Input
-              placeholder={`Search by ${this.state.request.searchField}`}
-              onChange={this.onChange.bind(this)}
-            />
-            <div className="search-btn">
-              <Button
-                type="primary"
-                icon="search"
-                onClick={() => this.onSearch()}
+            <div className="search-dropdown">
+              <label>Search by &nbsp;</label>
+              <Select
+                value={this.state.request.searchField}
+                onChange={(val) => this.onUpdate("request", "searchField", val)}
               >
-                {" "}
-                Search
-              </Button>
+                {this.state.columns
+                  .filter((el) => el.label !== "Supplier Sheet")
+                  .map((el) => {
+                    return (
+                      <Select.Option
+                        key={el.prop}
+                        label={el.label}
+                        value={el.prop}
+                      />
+                    );
+                  })}
+              </Select>
             </div>
-          </div>
+            <div className="search-input">
+              <Input
+                placeholder={`Search by ${this.state.request.searchField}`}
+                value={this.state.request.searchTerm}
+                onChange={this.onChange.bind(this)}
+              />
+              <div className="search-btn">
+                <Button
+                  type="primary"
+                  icon="search"
+                  onClick={() => this.onSearch()}
+                >
+                  {" "}
+                  Search
+                </Button>
+              </div>
+              <div className="reset-btn">
+                <Button type="danger" icon="circle-cross" onClick={() => this.onResetFilter()}>
+                  Reset Filters
+                </Button>
+              </div>
+            </div>
           </div>
 
           <div className="table-count">

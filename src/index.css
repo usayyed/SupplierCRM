@@ -233,8 +233,12 @@ label {
   max-width: 0;
 } */
 
-.el-button--danger {
+.single-option-card-btn .el-button--danger {
   width: 35px;
+}
+
+.reset-btn {
+  margin-left: 5px;
 }
 
 .supplier-table {

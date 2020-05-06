@@ -78,6 +78,21 @@ class SupplierForm extends Component {
         ],
         state: [
           { required: true, message: "Please Input State", trigger: "blur" },
+          {
+            trigger: "blur",
+            validator: (rule, value, callback) => {
+              var statePattern = /^\w{1,4}$/;
+              if (!statePattern.test(value)) {
+                callback(
+                  new Error(
+                    "State code error: Invalid State code. Please enter state code. Ex: CA"
+                  )
+                );
+              } else {
+                callback();
+              }
+            },
+          },
         ],
         postalCode: [
           {
@@ -220,6 +235,10 @@ class SupplierForm extends Component {
   }
 
   onChange(key, value) {
+    if (key === "state"){
+      value = value.toUpperCase();
+    }
+    
     this.setState((state, props) => {
       return {
         ...state,
@@ -343,11 +362,14 @@ class SupplierForm extends Component {
           </Form.Item>
 
           <Form.Item label="State" prop="state">
-            <Input
+          <div class="tooltip">
+              <span class="tooltiptext">Enter state code. Ex: CA</span>
+              <Input
               type="text"
               value={this.state.form.state}
               onChange={this.onChange.bind(this, "state")}
             ></Input>
+            </div>
           </Form.Item>
 
           <Form.Item label="City" prop="city">

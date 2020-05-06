@@ -9,12 +9,16 @@ import {
 } from "element-react";
 import { withRouter } from "react-router-dom";
 import axios from "../Middleware/Axios";
+import { i18n } from 'element-react'
+import locale from 'element-react/src/locale/lang/en'
 import config from "../config";
+
+i18n.use(locale);
 
 class TableComponent extends Component {
   onResetFilter() {
     const body = {
-      pageSize: 10,
+      pageSize: 50,
       pageNumber: 1,
       searchField: "name",
       searchTerm: "",
@@ -74,9 +78,10 @@ class TableComponent extends Component {
       },
       columns: [
         {
-          label: "Company Name",
+          label: "Name",
           prop: "name",
           sortable: true,
+          minWidth: "100px",
         },
         {
           label: "City",
@@ -87,19 +92,23 @@ class TableComponent extends Component {
           label: "State",
           prop: "state",
           sortable: true,
+          minWidth: "45px",
         },
         {
           label: "Certifications",
           prop: "certifications",
           sortable: true,
+          minWidth: "150px",
         },
         {
           label: "Products",
           prop: "products",
+          minWidth: "150px",
         },
         {
           label: "Services",
           prop: "services",
+          minWidth: "150px",
         },
         {
           label: "Supplier Sheet",
@@ -120,13 +129,13 @@ class TableComponent extends Component {
       ],
       data: [],
       request: {
-        pageSize: 10,
+        pageSize: 50,
         pageNumber: 1,
         searchField: "name",
         searchTerm: "",
         orderBy: ["name", "ASC"],
       },
-      count: 100,
+      count: 0,
     };
   }
 

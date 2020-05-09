@@ -30,53 +30,6 @@ class Supplier extends Component {
         supplierContact: [],
         cdwContacts: [],
       },
-      name: "DoddiTech",
-      description:
-        " Our Talent care fully screen and select the best talent. jnvdlvls" +
-        "zcvsv klmclsmcl knlnsldnls lilnn. inlsnlnlnlondl nkjnknk sdfseidfse.efnsnfsd." +
-        "zcvsv klmclsmcl knlnsldnls lilnn. inlsnlnlnlondl nkjnknk sdfseidfse.efnsnfsd." +
-        "zcvsv klmclsmcl knlnsldnls lilnn. inlsnlnlnlondl nkjnknk sdfseidfse.efnsnfsd." +
-        "zcvsv klmclsmcl knlnsldnls lilnn. inlsnlnlnlondl nkjnknk sdfseidfse.efnsnfsd." +
-        "zcvsv klmclsmcl knlnsldnls lilnn. inlsnlnlnlondl nkjnknk sdfseidfse.efnsnfsd.",
-
-      services: [
-        {
-          name: "Consulting Services",
-          value:
-            " Provider of Carefully Screened Top Notch IT Talent in Software.",
-        },
-        {
-          name: "Cyber Security",
-          value: " Expert in Risk Assesment and Threat Prevention",
-        },
-        {
-          name: "Software Development",
-          value:
-            " Experienced in Enterprise application Development using latest Technology.",
-        },
-        {
-          name: "Project Re-engineering",
-          value: " Provide Clear Road map for Legacy.",
-        },
-        {
-          name: "Big Data",
-          value:
-            " Data Analytics, Predictive Analytics and Business Intelligence.",
-        },
-      ],
-      certifications: [
-        "Minority Business Enterprise (MBE) City of New York",
-        "Disadvantaged Business Enterprise (DBE) Federal -USDOT",
-        "NYC Vendor#: VC00135345",
-        "NYS Vendor#: 100155897",
-      ],
-      contact: {
-        name: "Satya N. Doddi",
-        designation: "MBA, MA President & CEO",
-        email: "satya.doddi@dodditech.com",
-        website: "https://www.Dodditech.com",
-        contactno: "+1-(646)-3305354",
-      },
     };
   }
 
@@ -93,9 +46,7 @@ class Supplier extends Component {
   componentDidMount() {
     this.changeLoadingState(true, "Loading supplier details...");
     axios
-      .get(
-        `/admin/getSupplier/${this.props.match.params.supplierID}`
-      )
+      .get(`/admin/getSupplier/${this.props.match.params.supplierID}`)
       .then((res) => {
         if (res.status !== 201 && res.status !== 200) {
           throw new Error(
@@ -146,33 +97,56 @@ class Supplier extends Component {
               <h2> About us: </h2>
               <p> {this.state.data.description} </p>
             </Card>
-            {this.state.data.services.length > 0 ? (
-              <Card className="box-card">
-                <h2> Services: </h2>
-                <ul>
-                  {this.state.data.services.map((o, i) => {
-                    return <li key={i}>{o.name}</li>;
-                  })}
-                </ul>
-              </Card>
-            ) : null}
 
-            {this.state.data.managementTeams.length > 0 ? (
-              <Card className="box-card">
-                <h2> Management Teams: </h2>
-                {this.state.data.managementTeams.map((o, i) => {
+            {this.state.data.managementTeams.length > 0 ||
+            this.state.data.cdwContacts.length > 0 ? (
+              <div className="supplier-row">
+                {this.state.data.managementTeams.length > 0 ? (
+                  <div className="supplier-col">
+                    <Card className="box-card">
+                      <h2> Management Teams: </h2>
+                      {this.state.data.managementTeams.map((o, i) => {
+                        return (
+                          <div className="supplier-row">
+                            <div className="supplier-col">
+                              <b>Name:</b> {o.name}
+                            </div>
+                            <div className="supplier-col">
+                              <b>Title:</b> {o.title}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </Card>
+                  </div>
+                ) : null}
+                {this.state.data.cdwContacts.length > 0 ? (
+                  <div className="supplier-col">
+                  <Card className="box-card">
+                <h2> CDW Contacts: </h2>
+                {this.state.data.cdwContacts.map((o, i) => {
                   return (
                     <div className="supplier-row">
                       <div className="supplier-col">
                         <b>Name:</b> {o.name}
                       </div>
                       <div className="supplier-col">
-                        <b>Title:</b> {o.title}
+                        <b>Contact Number: </b>{" "}
+                        <a href={"tel:" + o.phone}>{o.phone}</a>
+                      </div>
+                      <div className="supplier-col">
+                        <b>Email: </b>
+                        <a href={"mailto:" + o.email.toLowerCase()}>
+                          {o.email.toLowerCase()}
+                        </a>
                       </div>
                     </div>
                   );
                 })}
               </Card>
+                  </div>
+                ) : null}
+              </div>
             ) : null}
 
             {this.state.data.products.length > 0 ||
@@ -322,31 +296,6 @@ class Supplier extends Component {
                   </div>
                 ) : null}
               </div>
-            ) : null}
-
-            {this.state.data.cdwContacts.length > 0 ? (
-              <Card className="box-card">
-                <h2> CDW Contacts: </h2>
-                {this.state.data.cdwContacts.map((o, i) => {
-                  return (
-                    <div className="supplier-row">
-                      <div className="supplier-col">
-                        <b>Name:</b> {o.name}
-                      </div>
-                      <div className="supplier-col">
-                        <b>Contact Number: </b>{" "}
-                        <a href={"tel:" + o.phone}>{o.phone}</a>
-                      </div>
-                      <div className="supplier-col">
-                        <b>Email: </b>
-                        <a href={"mailto:" + o.email.toLowerCase()}>
-                          {o.email.toLowerCase()}
-                        </a>
-                      </div>
-                    </div>
-                  );
-                })}
-              </Card>
             ) : null}
 
             <div className="supplier-row">

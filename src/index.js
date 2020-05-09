@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'element-theme-default';
-import './index.css';
 import { i18n } from 'element-react'
 import locale from 'element-react/src/locale/lang/en'
+import './index.css';
 
 i18n.use(locale);
 

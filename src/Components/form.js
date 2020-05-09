@@ -7,6 +7,7 @@ import {
   Upload,
   Icon,
   MessageBox,
+  Select
 } from "element-react";
 import ServicesFormItem from "./FormItems/services";
 import ProductFormItem from "./FormItems/products";
@@ -31,6 +32,8 @@ class SupplierForm extends Component {
         text: "",
         value: false,
       },
+      stateOptions: [],
+      cityOptions: [],
       form: {
         name: "",
         image: "",
@@ -173,6 +176,51 @@ class SupplierForm extends Component {
     this.refs.form.resetFields();
   }
 
+  componentDidMount() {
+    this.onChangeLocation("states", "states", "stateOptions");
+  }
+
+  onStateChange(state) {
+    this.onChange("state", state.name);
+    this.onChangeLocation(`cities/${state.id}`, "cities", "cityOptions");
+  }
+
+  onCityChange(city) {
+    this.onChange("city", city);
+  }
+
+  onChangeLocation(endpoint, prop, key) {
+    const requestOptions = {
+      method: "GET",
+    };
+    fetch(`${config.apiGateway.BASE_URL}/${endpoint}`, requestOptions)
+      .then((res) => {
+        if (!res.ok || (res.status !== 200 && res.status !== 201)) {
+          throw new Error(
+            "Some error occurred. Please contact the administrator"
+          );
+        }
+        return res.json();
+      })
+      .then((res) => {
+        this.setState((state, props) => {
+          return {
+            ...state,
+            [key]: res.data[prop],
+          };
+        });
+      })
+      .catch((err) => {
+        MessageBox.msgbox({
+          title: "Failed",
+          message: err.message,
+          type: "error",
+          showCancelButton: false,
+          confirmButtonText: "OK",
+        });
+      });
+  }
+
   submitData() {
     const requestOptions = {
       method: "POST",
@@ -235,10 +283,6 @@ class SupplierForm extends Component {
   }
 
   onChange(key, value) {
-    if (key === "state"){
-      value = value.toUpperCase();
-    }
-    
     this.setState((state, props) => {
       return {
         ...state,
@@ -362,22 +406,27 @@ class SupplierForm extends Component {
           </Form.Item>
 
           <Form.Item label="State" prop="state">
-          <div class="tooltip">
-              <span class="tooltiptext">Enter state code. Ex: CA</span>
-              <Input
-              type="text"
+            <Select
               value={this.state.form.state}
-              onChange={this.onChange.bind(this, "state")}
-            ></Input>
-            </div>
+              placeholder="Please select state"
+              onChange={(s) => this.onStateChange(s)}
+            >
+                {this.state.stateOptions.map((state) => {
+                  return (<Select.Option label={state.name} value={state} key={state.id}></Select.Option>)
+                })}
+            </Select>
           </Form.Item>
 
           <Form.Item label="City" prop="city">
-            <Input
-              type="text"
+          <Select
               value={this.state.form.city}
-              onChange={this.onChange.bind(this, "city")}
-            ></Input>
+              placeholder="Please select city"
+              onChange={(c) => this.onCityChange(c)}
+            >
+                {this.state.cityOptions.map((city) => {
+                  return (<Select.Option label={city} value={city} key={city}></Select.Option>)
+                })}
+            </Select>
           </Form.Item>
 
           <Form.Item label="Postal Code" prop="postalCode">

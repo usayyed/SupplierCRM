@@ -9,8 +9,9 @@ import {
 } from "element-react";
 import { withRouter } from "react-router-dom";
 import axios from "../Middleware/Axios";
-import { i18n } from 'element-react'
-import locale from 'element-react/src/locale/lang/en'
+import { i18n } from "element-react";
+
+import locale from "element-react/src/locale/lang/en";
 import config from "../config";
 
 i18n.use(locale);
@@ -92,7 +93,7 @@ class TableComponent extends Component {
           label: "State",
           prop: "state",
           sortable: true,
-          minWidth: "45px",
+          minWidth: "60px",
         },
         {
           label: "Certifications",
@@ -197,7 +198,11 @@ class TableComponent extends Component {
                 </Button>
               </div>
               <div className="reset-btn">
-                <Button type="danger" icon="circle-cross" onClick={() => this.onResetFilter()}>
+                <Button
+                  type="danger"
+                  icon="circle-cross"
+                  onClick={() => this.onResetFilter()}
+                >
                   Reset Filters
                 </Button>
               </div>

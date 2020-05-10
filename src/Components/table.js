@@ -112,6 +112,16 @@ class TableComponent extends Component {
           minWidth: "150px",
         },
         {
+          label: "NAICS Codes",
+          prop: "naicscodes",
+          minWidth: "70px",
+        },
+        {
+          label: "SIC Codes",
+          prop: "siccodes",
+          minWidth: "70px",
+        },
+        {
           label: "Supplier Sheet",
           width: "100px",
           render: (row, column, index) => {

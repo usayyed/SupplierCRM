@@ -77,25 +77,10 @@ class SupplierForm extends Component {
           { required: true, message: "Please Input address", trigger: "blur" },
         ],
         city: [
-          { required: true, message: "Please Input City", trigger: "blur" },
+          { required: true, message: "Please select City", trigger: "blur" },
         ],
         state: [
-          { required: true, message: "Please Input State", trigger: "blur" },
-          {
-            trigger: "blur",
-            validator: (rule, value, callback) => {
-              var statePattern = /^\w{1,4}$/;
-              if (!statePattern.test(value)) {
-                callback(
-                  new Error(
-                    "State code error: Invalid State code. Please enter state code. Ex: CA"
-                  )
-                );
-              } else {
-                callback();
-              }
-            },
-          },
+          { required: true, message: "Please select State", trigger: "blur" },
         ],
         postalCode: [
           {
@@ -166,6 +151,18 @@ class SupplierForm extends Component {
             message: "Please Input Company Description",
             trigger: "blur",
           },
+          {
+            trigger: "blur",
+            validator: (rule, value, callback) => {
+              const MAX_LENGTH = 5000;
+
+              if (value.length > MAX_LENGTH) {
+                callback(new Error(`Max length allowed is ${MAX_LENGTH} characters.`))
+              } else {
+                callback();
+              }
+            },
+          },
         ],
       },
     };
@@ -181,6 +178,7 @@ class SupplierForm extends Component {
   }
 
   onStateChange(state) {
+    this.onChange("city", "");
     this.onChange("state", state.name);
     this.onChangeLocation(`cities/${state.id}`, "cities", "cityOptions");
   }

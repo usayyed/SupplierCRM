@@ -34,6 +34,7 @@ class SupplierForm extends Component {
       },
       stateOptions: [],
       cityOptions: [],
+      certificateOptions: [],
       form: {
         name: "",
         image: "",
@@ -175,6 +176,7 @@ class SupplierForm extends Component {
 
   componentDidMount() {
     this.onChangeLocation("states", "states", "stateOptions");
+    this.onChangeLocation("certificates", "certifications", "certificateOptions");
   }
 
   onStateChange(state) {
@@ -292,6 +294,7 @@ class SupplierForm extends Component {
     });
 
     this.forceUpdate();
+    console.log(this.state)
   }
 
   processImage(e) {
@@ -477,6 +480,7 @@ class SupplierForm extends Component {
 
           <CertificationsFormItem
             onUpdate={this.onChange}
+            certifications={this.state.certificateOptions}
           ></CertificationsFormItem>
           <br />
           <Form.Item>

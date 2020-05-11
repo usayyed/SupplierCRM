@@ -7,7 +7,8 @@ import {
   Upload,
   Icon,
   MessageBox,
-  Select
+  Select,
+  Card
 } from "element-react";
 import ServicesFormItem from "./FormItems/services";
 import ProductFormItem from "./FormItems/products";
@@ -353,6 +354,7 @@ class SupplierForm extends Component {
         loading={this.state.loading.value}
         text={this.state.loading.text}
       >
+      <Card style={{ "maxWidth": "50%", "margin": "auto", "marginTop": "20px" }}>
         <h1 className="form-header">Supplier Profile</h1>
         <div className="form-header-info">
           We are gathering information to create <b>Supplier Digital Library</b>{" "}
@@ -490,6 +492,7 @@ class SupplierForm extends Component {
             <Button onClick={this.handleReset.bind(this)}>Cancel</Button>
           </Form.Item>
         </Form>
+        </Card>
       </Loading>
     );
   }

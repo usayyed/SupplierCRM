@@ -6,6 +6,7 @@ import {
   Select,
   Pagination,
   Loading,
+  Card
 } from "element-react";
 import { withRouter } from "react-router-dom";
 import axios from "../Middleware/Axios";
@@ -167,6 +168,7 @@ class TableComponent extends Component {
         loading={this.state.loading.value}
         text={this.state.loading.text}
       >
+      <Card style={{ "maxWidth": "100%", "margin": "auto", "marginTop": "20px" }}>
         <div>
           <h1 className="form-header">Supplier Database</h1>
         </div>
@@ -243,6 +245,7 @@ class TableComponent extends Component {
             onCurrentChange={(v) => this.onPageChange(v)}
           />
         </div>
+        </Card>
       </Loading>
     );
   }

@@ -11,7 +11,7 @@ body {
 .App {
   background-color: whitesmoke;
   width: auto;
-  height: 2000px;
+  height: 100%;
 }
 
 .el-table__body td { 
@@ -143,6 +143,13 @@ body {
 .form-link {
   float: right;
   margin-top: -15px;
+}
+
+.supplier .el-card {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin-left: 1px;
+  margin-right: 1px;
 }
 
 .el-card {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Form, Button, Loading, MessageBox } from "element-react";
+import { Input, Form, Button, Loading, MessageBox, Card } from "element-react";
 import config from "../config";
 import LocalStorageService from "../Middleware/LocalStorageService";
 import { withRouter } from "react-router-dom";
@@ -125,6 +125,7 @@ class LoginForm extends Component {
         loading={this.state.loading.value}
         text={this.state.loading.text}
       >
+      <Card style={{ "maxWidth": "30%", "margin": "auto", "marginTop": "20px" }}>
         <h1 className="form-header">Administrator Login</h1>
         <br></br>
         <Form
@@ -158,6 +159,7 @@ class LoginForm extends Component {
             <Button onClick={this.handleReset.bind(this)}>Reset</Button>
           </Form.Item>
         </Form>
+        </Card>
       </Loading>
     );
   }

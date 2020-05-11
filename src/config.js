@@ -1,6 +1,6 @@
 const dev = {
   apiGateway: {
-    BASE_URL: "http://localhost:8000/api"
+    BASE_URL: "http://supplierlibrary-api-dev.us-west-2.elasticbeanstalk.com/api"
   }
 };
 

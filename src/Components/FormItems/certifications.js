@@ -99,6 +99,7 @@ class CertificationsFormItem extends Component {
                   >
                     <label>Name: </label>
                     <br/>
+                    <div className="certification-drpdwn">
                     <Select
                       value={certification.name}
                       placeholder="Please select a certification"
@@ -114,7 +115,7 @@ class CertificationsFormItem extends Component {
                         );
                       })}
                     </Select>
-                    <br/>
+                    </div>
                     <label>Number: </label>
                     <Input
                       value={certification.number}

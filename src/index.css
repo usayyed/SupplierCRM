@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: small;
+  font-size: x-small;
 }
 
 .App {
@@ -143,6 +143,10 @@ body {
 .form-link {
   float: right;
   margin-top: -15px;
+}
+
+.certification-drpdwn .el-select-dropdown__wrap {
+  max-height: 150px;
 }
 
 .supplier .el-card {

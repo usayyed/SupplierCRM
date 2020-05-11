@@ -95,7 +95,7 @@ class TableComponent extends Component {
           label: "State",
           prop: "state",
           sortable: true,
-          minWidth: "60px",
+          minWidth: "100px",
         },
         {
           label: "Certifications",
@@ -116,15 +116,15 @@ class TableComponent extends Component {
         {
           label: "NAICS Codes",
           prop: "naicscodes",
-          minWidth: "70px",
+          minWidth: "90px",
         },
         {
           label: "SIC Codes",
           prop: "siccodes",
-          minWidth: "70px",
+          minWidth: "80px",
         },
         {
-          label: "Supplier Sheet",
+          label: "Sheet",
           width: "100px",
           render: (row, column, index) => {
             return (

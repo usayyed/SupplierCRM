@@ -6,7 +6,8 @@ import {
   Select,
   Pagination,
   Loading,
-  Card
+  Card,
+  MessageBox
 } from "element-react";
 import { withRouter } from "react-router-dom";
 import axios from "../Middleware/Axios";
@@ -278,7 +279,13 @@ class TableComponent extends Component {
         });
       })
       .catch((err) => {
-        console.log(err.message);
+        MessageBox.msgbox({
+          title: "Failed",
+          message: err.message,
+          type: "error",
+          showCancelButton: false,
+          confirmButtonText: "OK",
+        });
       })
       .finally(() => this.changeLoadingState(false, ""));
   }

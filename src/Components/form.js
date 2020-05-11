@@ -295,7 +295,6 @@ class SupplierForm extends Component {
     });
 
     this.forceUpdate();
-    console.log(this.state)
   }
 
   processImage(e) {

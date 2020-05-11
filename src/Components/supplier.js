@@ -55,7 +55,6 @@ class Supplier extends Component {
           );
         }
 
-        console.log(res.data.data.services);
         this.setState((state, props) => {
           return { ...state, data: res.data.data };
         });

@@ -8,7 +8,7 @@ import {
   Icon,
   MessageBox,
   Select,
-  Card
+  Card,
 } from "element-react";
 import ServicesFormItem from "./FormItems/services";
 import ProductFormItem from "./FormItems/products";
@@ -32,6 +32,10 @@ class SupplierForm extends Component {
       loading: {
         text: "",
         value: false,
+      },
+      cityInputType: {
+        isSelect: true,
+        text: "Enter city manually"
       },
       stateOptions: [],
       cityOptions: [],
@@ -159,7 +163,9 @@ class SupplierForm extends Component {
               const MAX_LENGTH = 5000;
 
               if (value.length > MAX_LENGTH) {
-                callback(new Error(`Max length allowed is ${MAX_LENGTH} characters.`))
+                callback(
+                  new Error(`Max length allowed is ${MAX_LENGTH} characters.`)
+                );
               } else {
                 callback();
               }
@@ -177,7 +183,11 @@ class SupplierForm extends Component {
 
   componentDidMount() {
     this.onChangeLocation("states", "states", "stateOptions");
-    this.onChangeLocation("certificates", "certifications", "certificateOptions");
+    this.onChangeLocation(
+      "certificates",
+      "certifications",
+      "certificateOptions"
+    );
   }
 
   onStateChange(state) {
@@ -188,6 +198,20 @@ class SupplierForm extends Component {
 
   onCityChange(city) {
     this.onChange("city", city);
+  }
+
+  onCityInputTypeChange() {
+    const text = this.state.cityInputType.isSelect ? "Enter city manually" : "Select city";
+
+    this.setState({
+      ...this.state,
+      cityInputType: {
+        isSelect: !this.state.cityInputType.isSelect,
+        text: text,
+      }
+    })
+
+    this.forceUpdate();
   }
 
   onChangeLocation(endpoint, prop, key) {
@@ -353,144 +377,163 @@ class SupplierForm extends Component {
         loading={this.state.loading.value}
         text={this.state.loading.text}
       >
-      <Card style={{ "maxWidth": "50%", "margin": "auto", "marginTop": "20px" }}>
-        <h1 className="form-header">Supplier Profile</h1>
-        <div className="form-header-info">
-          We are gathering information to create <b>Supplier Digital Library</b>{" "}
-          for ease of access within our organization.
-          <br />
-          Thank you for filling out the form with all the required details.
-        </div>
-        <br></br>
-        <Form
-          ref="form"
-          className="en-US"
-          model={this.state.form}
-          labelWidth="120"
-          onSubmit={this.onSubmit.bind(this)}
-          rules={this.state.rules}
-          labelPosition="top"
-        >
-          <Form.Item label="Company Name" prop="name">
-            <Input
-              value={this.state.form.name}
-              onChange={this.onChange.bind(this, "name")}
-            ></Input>
-          </Form.Item>
+        <Card style={{ maxWidth: "50%", margin: "auto", marginTop: "20px" }}>
+          <h1 className="form-header">Supplier Profile</h1>
+          <div className="form-header-info">
+            We are gathering information to create{" "}
+            <b>Supplier Digital Library</b> for ease of access within our
+            organization.
+            <br />
+            Thank you for filling out the form with all the required details.
+          </div>
+          <br></br>
+          <Form
+            ref="form"
+            className="en-US"
+            model={this.state.form}
+            labelWidth="120"
+            onSubmit={this.onSubmit.bind(this)}
+            rules={this.state.rules}
+            labelPosition="top"
+          >
+            <Form.Item label="Company Name" prop="name">
+              <Input
+                value={this.state.form.name}
+                onChange={this.onChange.bind(this, "name")}
+              ></Input>
+            </Form.Item>
 
-          <Form.Item label="Company Logo" prop="image">
-            <Upload
-              className="upload"
-              httpRequest={(e) => this.processImage(e)}
-              showFileList={false}
-              tip={
-                <div className="el-upload__tip">
-                  jpg/png files with a size greater than 100px (width and
-                  height)
-                </div>
-              }
-            >
-              <Button size="mini" type="primary">
-                Click to upload
-              </Button>
-              {this.state.form.image.length > 0 ? (
-                <Icon name="circle-check" type="primary" />
-              ) : null}
-            </Upload>
-          </Form.Item>
+            <Form.Item label="Company Logo" prop="image">
+              <Upload
+                className="upload"
+                httpRequest={(e) => this.processImage(e)}
+                showFileList={false}
+                tip={
+                  <div className="el-upload__tip">
+                    jpg/png files with a size greater than 100px (width and
+                    height)
+                  </div>
+                }
+              >
+                <Button size="mini" type="primary">
+                  Click to upload
+                </Button>
+                {this.state.form.image.length > 0 ? (
+                  <Icon name="circle-check" type="primary" />
+                ) : null}
+              </Upload>
+            </Form.Item>
 
-          <Form.Item label="Headquarter Address" prop="address">
-            <Input
-              type="textarea"
-              value={this.state.form.address}
-              onChange={this.onChange.bind(this, "address")}
-            ></Input>
-          </Form.Item>
+            <Form.Item label="Headquarter Address" prop="address">
+              <Input
+                type="textarea"
+                value={this.state.form.address}
+                onChange={this.onChange.bind(this, "address")}
+              ></Input>
+            </Form.Item>
 
-          <Form.Item label="State" prop="state">
-            <Select
-              value={this.state.form.state}
-              placeholder="Please select state"
-              onChange={(s) => this.onStateChange(s)}
-            >
+            <Form.Item label="State" prop="state">
+              <Select
+                value={this.state.form.state}
+                placeholder="Please select state"
+                onChange={(s) => this.onStateChange(s)}
+              >
                 {this.state.stateOptions.map((state) => {
-                  return (<Select.Option label={state.name} value={state} key={state.id}></Select.Option>)
+                  return (
+                    <Select.Option
+                      label={state.name}
+                      value={state}
+                      key={state.id}
+                    ></Select.Option>
+                  );
                 })}
-            </Select>
-          </Form.Item>
+              </Select>
+            </Form.Item>
 
-          <Form.Item label="City" prop="city">
-          <Select
-              value={this.state.form.city}
-              placeholder="Please select city"
-              onChange={(c) => this.onCityChange(c)}
-            >
+            <Form.Item label="City" prop="city">
+              {this.state.cityInputType.isSelect ? (<Select
+                value={this.state.form.city}
+                placeholder="Please select city"
+                onChange={(c) => this.onCityChange(c)}
+              >
                 {this.state.cityOptions.map((city) => {
-                  return (<Select.Option label={city} value={city} key={city}></Select.Option>)
+                  return (
+                    <Select.Option
+                      label={city}
+                      value={city}
+                      key={city}
+                    ></Select.Option>
+                  );
                 })}
-            </Select>
-          </Form.Item>
+              </Select>) : (<Input
+                value={this.state.form.city}
+                onChange={this.onChange.bind(this, "city")}
+              ></Input>)}
+              {this.state.cityInputType.isSelect ? (<Button type="primary" size="small" onClick={() => this.onCityInputTypeChange()}>Enter city manually</Button>) : (<Button type="primary" size="small" onClick={() => this.onCityInputTypeChange()}>Select city</Button>)}
+            </Form.Item>
 
-          <Form.Item label="Postal Code" prop="postalCode">
-            <Input
-              type=""
-              value={this.state.form.postalCode}
-              onChange={this.onChange.bind(this, "postalCode")}
-            ></Input>
-          </Form.Item>
-
-          <Form.Item label="Website" prop="website">
-            <Input
-              type=""
-              value={this.state.form.website}
-              onChange={this.onChange.bind(this, "website")}
-            ></Input>
-          </Form.Item>
-          <Form.Item label="DUNS#" prop="duns">
-            <div class="tooltip">
-              <span class="tooltiptext">Enter 9 digit DUNS number</span>
+            <Form.Item label="Postal Code" prop="postalCode">
               <Input
                 type=""
-                value={this.state.form.duns}
-                onChange={this.onChange.bind(this, "duns")}
+                value={this.state.form.postalCode}
+                onChange={this.onChange.bind(this, "postalCode")}
               ></Input>
-            </div>
-          </Form.Item>
-          <Form.Item label="Company Description" prop="description">
-            <Input
-              type="textarea"
-              autosize={{ minRows: 4, maxRows: 6 }}
-              placeholder="About Your Company"
-              value={this.state.form.description}
-              onChange={this.onChange.bind(this, "description")}
-            ></Input>
-          </Form.Item>
+            </Form.Item>
 
-          <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
-          <ProductFormItem onUpdate={this.onChange}> </ProductFormItem>
-          <ManagementTeamFormItem
-            onUpdate={this.onChange}
-          ></ManagementTeamFormItem>
-          <ContactsFormItem onUpdate={this.onChange}> </ContactsFormItem>
-          <CdwContactsFormItem onUpdate={this.onChange}> </CdwContactsFormItem>
-          <NaicsFormItem onUpdate={this.onChange}> </NaicsFormItem>
-          <SicFormItem onUpdate={this.onChange}> </SicFormItem>
-          <ClientsFormItem onUpdate={this.onChange}> </ClientsFormItem>
-          <PartnersFormItem onUpdate={this.onChange}> </PartnersFormItem>
-          <AwardsFormItem onUpdate={this.onChange}> </AwardsFormItem>
+            <Form.Item label="Website" prop="website">
+              <Input
+                type=""
+                value={this.state.form.website}
+                onChange={this.onChange.bind(this, "website")}
+              ></Input>
+            </Form.Item>
+            <Form.Item label="DUNS#" prop="duns">
+              <div class="tooltip">
+                <span class="tooltiptext">Enter 9 digit DUNS number</span>
+                <Input
+                  type=""
+                  value={this.state.form.duns}
+                  onChange={this.onChange.bind(this, "duns")}
+                ></Input>
+              </div>
+            </Form.Item>
+            <Form.Item label="Company Description" prop="description">
+              <Input
+                type="textarea"
+                autosize={{ minRows: 4, maxRows: 6 }}
+                placeholder="About Your Company"
+                value={this.state.form.description}
+                onChange={this.onChange.bind(this, "description")}
+              ></Input>
+            </Form.Item>
 
-          <CertificationsFormItem
-            onUpdate={this.onChange}
-            certifications={this.state.certificateOptions}
-          ></CertificationsFormItem>
-          <br />
-          <Form.Item>
-            <Button type="primary" nativeType="submit">
-              Create
-            </Button>
-            <Button onClick={this.handleReset.bind(this)}>Cancel</Button>
-          </Form.Item>
-        </Form>
+            <ServicesFormItem onUpdate={this.onChange}></ServicesFormItem>
+            <ProductFormItem onUpdate={this.onChange}> </ProductFormItem>
+            <ManagementTeamFormItem
+              onUpdate={this.onChange}
+            ></ManagementTeamFormItem>
+            <ContactsFormItem onUpdate={this.onChange}> </ContactsFormItem>
+            <CdwContactsFormItem onUpdate={this.onChange}>
+              {" "}
+            </CdwContactsFormItem>
+            <NaicsFormItem onUpdate={this.onChange}> </NaicsFormItem>
+            <SicFormItem onUpdate={this.onChange}> </SicFormItem>
+            <ClientsFormItem onUpdate={this.onChange}> </ClientsFormItem>
+            <PartnersFormItem onUpdate={this.onChange}> </PartnersFormItem>
+            <AwardsFormItem onUpdate={this.onChange}> </AwardsFormItem>
+
+            <CertificationsFormItem
+              onUpdate={this.onChange}
+              certifications={this.state.certificateOptions}
+            ></CertificationsFormItem>
+            <br />
+            <Form.Item>
+              <Button type="primary" nativeType="submit">
+                Create
+              </Button>
+              <Button onClick={this.handleReset.bind(this)}>Cancel</Button>
+            </Form.Item>
+          </Form>
         </Card>
       </Loading>
     );
